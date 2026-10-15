@@ -20,6 +20,17 @@
       }
     },
     {
+      "name": "show_band",
+      "value": "All councils",
+      "bind": {
+        "input": "radio",
+        "options": ["All councils", "Under 150", "150 to 250", "250 to 350", "350 to 500", "500 or more"],
+        "labels": ["All councils", "Very low (under 150)", "Low (150–250)", "Medium (250–350)", "High (350–500)", "Very high (500+)"],
+        "name": "Show ",
+        "element": "#zoom-control"
+      }
+    },
+    {
       "name": "view",
       "expr": "{'Eastern Australia': {lon: 146, lat: -25, scale: 950}, 'Greater Sydney': {lon: 150.95, lat: -33.8, scale: 24000}, 'Greater Melbourne': {lon: 145.05, lat: -37.85, scale: 24000}, 'South-east Queensland': {lon: 152.8, lat: -27.4, scale: 14000}}[region]"
     }
@@ -88,31 +99,45 @@
             "fields": ["attendance", "attendance_per_1000", "population"]
           }
         },
-        {"filter": "datum.attendance != null"}
+        {"filter": "datum.attendance != null"},
+        {
+          "calculate": "datum.attendance_per_1000 < 150 ? 'Under 150' : datum.attendance_per_1000 < 250 ? '150 to 250' : datum.attendance_per_1000 < 350 ? '250 to 350' : datum.attendance_per_1000 < 500 ? '350 to 500' : '500 or more'",
+          "as": "rate_band"
+        }
       ],
       "mark": {
         "type": "geoshape",
-        "clip": true,
-        "stroke": "#f4f7f5",
-        "strokeWidth": 0.4
+        "clip": true
       },
       "encoding": {
         "color": {
-          "field": "attendance_per_1000",
-          "type": "quantitative",
-          "scale": {
-            "type": "threshold",
-            "domain": [150, 250, 350, 500],
-            "range": ["#cfe6e2", "#93cbc6", "#52aaa6", "#1f8283", "#0b4f55"]
+          "condition": {
+            "test": "show_band == 'All councils' || datum.rate_band == show_band",
+            "field": "attendance_per_1000",
+            "type": "quantitative",
+            "scale": {
+              "type": "threshold",
+              "domain": [150, 250, 350, 500],
+              "range": ["#cfe6e2", "#93cbc6", "#52aaa6", "#1f8283", "#0b4f55"]
+            },
+            "legend": {
+              "title": "Attendances per 1,000 residents",
+              "type": "symbol",
+              "orient": "bottom",
+              "direction": "horizontal",
+              "symbolType": "square",
+              "labelExpr": "datum.index == 0 ? 'Under 150' : datum.index == 4 ? '500 or more' : replace(datum.label, ' – ', ' to ')"
+            }
           },
-          "legend": {
-            "title": "Attendances per 1,000 residents",
-            "type": "symbol",
-            "orient": "bottom",
-            "direction": "horizontal",
-            "symbolType": "square",
-            "labelExpr": "datum.index == 0 ? 'Under 150' : datum.index == 4 ? '500 or more' : replace(datum.label, ' – ', ' to ')"
-          }
+          "value": "#ebefed"
+        },
+        "stroke": {
+          "condition": {"test": "show_band != 'All councils' && datum.rate_band == show_band", "value": "#10292e"},
+          "value": "#f4f7f5"
+        },
+        "strokeWidth": {
+          "condition": {"test": "show_band != 'All councils' && datum.rate_band == show_band", "value": 0.8},
+          "value": 0.4
         },
         "tooltip": [
           {"field": "properties.lga_name", "title": "Council area"},
@@ -186,9 +211,9 @@
             "longitude": 133.5,
             "latitude": -27,
             "note": [
-              "Shown in grey: states that",
-              "do not publish these",
-              "figures council by council"
+              "Councils in the states",
+              "coloured in grey do not",
+              "publish their attendancedata publically"
             ]
           }
         ]

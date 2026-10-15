@@ -42,8 +42,7 @@
       "field": "share",
       "type": "quantitative",
       "stack": "zero",
-      "scale": {"domain": [0, 1]},
-      "axis": {"title": "Share of all attendances", "format": "%", "tickCount": 5}
+      "scale": {"domain": [0, 1]}
     },
     "order": {"field": "position"}
   },

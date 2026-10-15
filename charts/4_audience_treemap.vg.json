@@ -109,9 +109,6 @@
         "enter": {
           "x": {"value": 0},
           "y": {"value": 15},
-          "text": {
-            "value": "The area of each rectangle shows the number of events"
-          },
           "fontStyle": {"value": "italic"},
           "fill": {"value": "#47595c"}
         }

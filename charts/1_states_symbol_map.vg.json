@@ -108,28 +108,6 @@
               }
             ]
           }
-        },
-        {
-          "transform": [
-            {
-              "calculate": "datum.state + ' ' + format(datum.attendance_per_1000, '.0f')",
-              "as": "label"
-            },
-            {
-              "calculate": "datum.attendance > 1000000 || datum.state == 'ACT' ? datum.latitude : datum.latitude - 2",
-              "as": "label_latitude"
-            },
-            {
-              "calculate": "datum.state == 'ACT' ? datum.longitude + 3.7 : datum.longitude",
-              "as": "label_longitude"
-            }
-          ],
-          "mark": {"type": "text", "fontSize": 12, "fontWeight": 600},
-          "encoding": {
-            "longitude": {"field": "label_longitude", "type": "quantitative"},
-            "latitude": {"field": "label_latitude", "type": "quantitative"},
-            "text": {"field": "label"}
-          }
         }
       ]
     },
@@ -139,7 +117,7 @@
           {
             "longitude": 131,
             "latitude": -38.5,
-            "note": ["South Australia: the highest", "rate in the country"]
+            "note": ["South Australia has the highest", "rate of attendance in the country"]
           }
         ]
       },

@@ -304,6 +304,64 @@ select:focus-visible {
   font: inherit;
 }
 
+/* Radio filters drawn as chips, each with the colour it filters to */
+
+.control .vega-bind + .vega-bind {
+  margin-top: 14px;
+}
+
+.control .vega-bind-radio {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 6px;
+  vertical-align: middle;
+}
+
+.control .vega-bind-radio input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.control .vega-bind-radio label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid #b4c2bf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.control .vega-bind-radio label:has(input:checked) {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+  font-weight: 600;
+}
+
+.control .vega-bind-radio label:has(input:focus-visible) {
+  outline: 2px solid var(--wattle);
+  outline-offset: 2px;
+}
+
+.control .vega-bind-radio label::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #cfe6e2 0 20%, #93cbc6 20% 40%, #52aaa6 40% 60%, #1f8283 60% 80%, #0b4f55 80%);
+}
+
+.control label:has(input[value="Under 150"])::before { background: #cfe6e2; }
+.control label:has(input[value="150 to 250"])::before { background: #93cbc6; }
+.control label:has(input[value="250 to 350"])::before { background: #52aaa6; }
+.control label:has(input[value="350 to 500"])::before { background: #1f8283; }
+.control label:has(input[value="500 or more"])::before { background: #0b4f55; }
+
 #vg-tooltip-element.vg-tooltip {
   border: 1px solid var(--line);
   border-radius: 6px;

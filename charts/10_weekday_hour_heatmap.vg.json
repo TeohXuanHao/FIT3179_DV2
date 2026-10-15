@@ -57,11 +57,6 @@
           {"field": "events", "title": "Events in 2025", "format": ","}
         ]
       }
-    },
-    {
-      "transform": [{"filter": "datum.events >= 900"}],
-      "mark": {"type": "text", "fill": "#ffffff", "fontWeight": 600},
-      "encoding": {"text": {"field": "events", "format": ","}}
     }
   ]
 }

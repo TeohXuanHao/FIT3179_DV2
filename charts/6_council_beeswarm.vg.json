@@ -1,3 +1,4 @@
+
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Beeswarm plot - attendances per 1,000 residents at council library programs, one circle per council area from 2024 to 2025",
@@ -112,7 +113,7 @@
           "xfocus": {"scale": "x", "field": "shown_rate"},
           "yfocus": {"scale": "y", "field": "state_name", "band": 0.5},
           "fill": {
-            "signal": "indexof(named, datum.lga_name) >= 0 ? '#eda100' : '#2b8b8c'"
+            "signal": "indexof(named, datum.lga_name) >= 0 ? '#0b4f55' : '#2b8b8c'"
           },
           "fillOpacity": {"value": 0.8}
         },
