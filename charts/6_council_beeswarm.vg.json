@@ -10,10 +10,6 @@
       "name": "width",
       "init": "containerSize()[0]",
       "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
-    },
-    {
-      "name": "named",
-      "value": ["Rockhampton", "Penrith", "Brisbane", "Sydney", "Melbourne"]
     }
   ],
   "data": [
@@ -112,9 +108,7 @@
         "update": {
           "xfocus": {"scale": "x", "field": "shown_rate"},
           "yfocus": {"scale": "y", "field": "state_name", "band": 0.5},
-          "fill": {
-            "signal": "indexof(named, datum.lga_name) >= 0 ? '#0b4f55' : '#2b8b8c'"
-          },
+          "fill": {"value": "#2b8b8c"},
           "fillOpacity": {"value": 0.8}
         },
         "hover": {"fillOpacity": {"value": 1}}
@@ -136,41 +130,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "text",
-      "from": {"data": "nodes"},
-      "interactive": false,
-      "encode": {
-        "update": {
-          "x": {"field": "x"},
-          "y": {"field": "y", "offset": {"signal": "-sqrt(datum.size) / 2 - 5"}},
-          "text": {
-            "signal": "indexof(named, datum.datum.lga_name) >= 0 ? datum.datum.lga_name + ' ' + format(datum.datum.attendance_per_1000, '.0f') : ''"
-          },
-          "align": {"value": "center"},
-          "fontWeight": {"value": 600},
-          "stroke": {"value": "#f4f7f5"},
-          "strokeWidth": {"value": 3},
-          "strokeJoin": {"value": "round"}
-        }
-      }
-    },
-    {
-      "type": "text",
-      "from": {"data": "nodes"},
-      "interactive": false,
-      "encode": {
-        "update": {
-          "x": {"field": "x"},
-          "y": {"field": "y", "offset": {"signal": "-sqrt(datum.size) / 2 - 5"}},
-          "text": {
-            "signal": "indexof(named, datum.datum.lga_name) >= 0 ? datum.datum.lga_name + ' ' + format(datum.datum.attendance_per_1000, '.0f') : ''"
-          },
-          "align": {"value": "center"},
-          "fontWeight": {"value": 600}
-        }
-      }
     },
     {
       "type": "text",

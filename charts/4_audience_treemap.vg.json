@@ -21,6 +21,7 @@
           "as": "audience",
           "expr": "datum.audience || 'Not stated'"
         },
+        {"type": "filter", "expr": "datum.audience != 'Young people'"},
         {
           "type": "aggregate",
           "groupby": ["audience", "category_group"],
@@ -85,7 +86,6 @@
       "domain": [
         "Early childhood",
         "Children",
-        "Young people",
         "Adults",
         "Seniors",
         "All ages",
@@ -94,7 +94,6 @@
       "range": [
         "#eda100",
         "#e34948",
-        "#008300",
         "#2a78d6",
         "#4a3aa7",
         "#1baf7a",

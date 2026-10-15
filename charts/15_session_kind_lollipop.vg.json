@@ -11,7 +11,7 @@
     {"filter": "datum.attendance != null"},
     {"filter": "!test(/^Other/, datum.event_type)"},
     {
-      "calculate": "test(/^F5F /, datum.event_type) ? 'First 5 Forever, for children under five' : 'Other library programs'",
+      "calculate": "test(/^F5F /, datum.event_type) ? 'First 5 Forever' : 'Other library programs'",
       "as": "program"
     },
     {
@@ -99,14 +99,13 @@
             "position": 110,
             "note": [
               "Expos and outreach sessions in parks,",
-              "schools and playgroups draw the most"
+              "schools and playgroups draw the most attendance"
             ]
           },
           {
             "position": 400,
             "note": [
-              "The most common kind of session,",
-              "the information session, averaged",
+              "The information session averaged",
               "fewer than 4 people"
             ]
           }
