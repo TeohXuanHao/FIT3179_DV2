@@ -1,0 +1,121 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Streamgraph - Brisbane City Council events in each month of 2025 by the type of event",
+  "width": "container",
+  "height": 340,
+  "data": {
+    "url": "data/events_brisbane_2025.csv",
+    "format": {"type": "csv", "parse": {"date": "date:'%Y-%m-%d'"}}
+  },
+  "transform": [
+    {
+      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'Arts', 'Travel & Outdoor', 'Environment'], datum.category_group) >= 0 ? datum.category_group : 'All other kinds'",
+      "as": "kind"
+    },
+    {
+      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'Arts', 'Travel & Outdoor', 'Environment', 'All other kinds'], datum.kind)",
+      "as": "position"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "date",
+      "timeUnit": "month",
+      "type": "temporal",
+      "axis": {
+        "title": null,
+        "format": "%b",
+        "tickCount": 12,
+        "grid": true,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "y": {"aggregate": "count", "stack": "center", "axis": null},
+    "color": {
+      "field": "kind",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Sports & Fitness",
+          "Family & Education",
+          "Arts",
+          "Travel & Outdoor",
+          "Environment",
+          "All other kinds"
+        ],
+        "range": [
+          "#2a78d6",
+          "#eb6834",
+          "#1baf7a",
+          "#eda100",
+          "#e87ba4",
+          "#8c9895"
+        ]
+      },
+      "legend": {
+        "title": null,
+        "orient": "bottom",
+        "symbolType": "square",
+        "columns": 3
+      }
+    },
+    "order": {"field": "position"}
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "interpolate": "monotone",
+        "fillOpacity": 0.85,
+        "stroke": "#f4f7f5",
+        "strokeWidth": 1.5
+      }
+    },
+    {
+      "mark": {"type": "point", "size": 500, "opacity": 0},
+      "encoding": {
+        "tooltip": [
+          {"field": "date", "timeUnit": "month", "title": "Month", "format": "%B"},
+          {"field": "kind", "title": "Kind of event"},
+          {"aggregate": "count", "title": "Events", "format": ","}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "date": "2025-06-01",
+            "reach": 54,
+            "note": [
+              "Sport and fitness dips in June: 442 events,",
+              "down from 1,157 in May ↓"
+            ]
+          },
+          {
+            "date": "2025-10-01",
+            "reach": 0,
+            "note": [
+              "Family and education events run",
+              "all year, 670 to 1,010 a month"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "baseline": "bottom",
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"value": -24},
+        "color": {"value": "#47595c"},
+        "text": {"field": "note"}
+      }
+    }
+  ]
+}

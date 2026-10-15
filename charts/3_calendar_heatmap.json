@@ -1,0 +1,137 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Calendar heatmap - number of Brisbane City Council events on each day in 2025",
+  "width": "container",
+  "height": 150,
+  "data": {
+    "url": "data/events_brisbane_2025.csv",
+    "format": {"type": "csv", "parse": {"date": "date:'%Y-%m-%d'"}}
+  },
+  "transform": [
+    {
+      "aggregate": [{"op": "count", "as": "events"}],
+      "groupby": ["date", "month", "weekday"]
+    },
+    {"calculate": "floor((dayofyear(datum.date) + 1) / 7)", "as": "week"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "week",
+      "type": "ordinal",
+      "axis": null,
+      "scale": {"paddingInner": 0.14}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rect", "cornerRadius": 2},
+      "encoding": {
+        "y": {
+          "field": "weekday",
+          "type": "ordinal",
+          "sort": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          "scale": {"paddingInner": 0.14},
+          "axis": {"title": null, "domain": false, "ticks": false}
+        },
+        "color": {
+          "field": "events",
+          "type": "quantitative",
+          "scale": {"scheme": "teals", "domain": [0, 131]},
+          "legend": {
+            "title": "Events that day",
+            "orient": "top",
+            "direction": "horizontal",
+            "gradientLength": 180
+          }
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "title": "Day",
+            "format": "%A %e %B %Y"
+          },
+          {"field": "events", "title": "Events"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [{"op": "min", "field": "week", "as": "week"}],
+          "groupby": ["month"]
+        },
+        {"calculate": "monthAbbrevFormat(datum.month - 1)", "as": "label"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "fill": "#47595c"
+      },
+      "encoding": {
+        "x": {"field": "week", "type": "ordinal", "bandPosition": 0},
+        "y": {"value": -6},
+        "text": {"field": "label"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "week": 20,
+            "note": ["↑ Busiest day of the year:", "Friday 23 May, 131 events"]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "fill": "#47595c",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "x": {"field": "week", "type": "ordinal", "bandPosition": 0.2},
+        "y": {"value": 158},
+        "text": {"field": "note"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "week": 16,
+            "note": [
+              "Pale weekdays are public holidays, ↑",
+              "such as Good Friday and Anzac Day"
+            ]
+          },
+          {
+            "week": 51,
+            "note": [
+              "Christmas Day to 28 December: ↑",
+              "fewer than 20 events a day"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "top",
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "fill": "#47595c",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "x": {"field": "week", "type": "ordinal", "bandPosition": 0.8},
+        "y": {"value": 158},
+        "text": {"field": "note"}
+      }
+    }
+  ]
+}

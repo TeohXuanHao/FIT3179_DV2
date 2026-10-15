@@ -1,0 +1,138 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Dot map - every place where Brisbane City Council held an event in 2025, coloured by type of venue",
+  "width": "container",
+  "height": 470,
+  "params": [
+    {
+      "name": "audience",
+      "value": "Everyone",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Everyone",
+          "Early childhood",
+          "Children",
+          "Young people",
+          "Adults",
+          "Seniors",
+          "All ages"
+        ],
+        "name": "Show events for ",
+        "element": "#audience-control"
+      }
+    }
+  ],
+  "projection": {
+    "type": "mercator",
+    "center": [153.0, -27.47],
+    "scale": 58000,
+    "translate": {"expr": "[width / 2, height / 2]"}
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/lga_brisbane_detail.topojson",
+        "format": {"type": "topojson", "feature": "lga"}
+      },
+      "mark": {"type": "geoshape", "clip": true, "fill": "#e1e8e5"}
+    },
+    {
+      "data": {
+        "url": "data/events_brisbane_2025.csv",
+        "format": {
+          "type": "csv",
+          "parse": {"latitude": "number", "longitude": "number"}
+        }
+      },
+      "transform": [
+        {"filter": "datum.latitude != null"},
+        {"filter": "audience == 'Everyone' || datum.audience == audience"},
+        {
+          "calculate": "datum.venue_type == 'Library' ? 'Library' : datum.venue_type == 'Park' || datum.venue_type == 'Community garden' ? 'Park or garden' : datum.venue_type == 'Swimming pool' ? 'Swimming pool' : datum.venue_type == 'Community hall' || datum.venue_type == 'Other council venue' ? 'Hall or other council venue' : 'Other or not stated'",
+          "as": "place"
+        },
+        {
+          "aggregate": [{"op": "count", "as": "events"}],
+          "groupby": ["latitude", "longitude", "place"]
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "clip": true,
+        "size": 46,
+        "opacity": 0.9,
+        "stroke": "#f4f7f5",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "color": {
+          "field": "place",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Library",
+              "Park or garden",
+              "Hall or other council venue",
+              "Swimming pool",
+              "Other or not stated"
+            ],
+            "range": ["#2a78d6", "#008300", "#eda100", "#4a3aa7", "#8c9895"]
+          },
+          "legend": {
+            "title": "Each dot is one venue",
+            "orient": "bottom",
+            "columns": 3
+          }
+        },
+        "tooltip": [
+          {"field": "place", "title": "Type of venue"},
+          {"field": "events", "title": "Events held here in 2025", "format": ","}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"suburb": "City centre", "longitude": 153.025, "latitude": -27.47},
+          {"suburb": "Chermside", "longitude": 153.031, "latitude": -27.386},
+          {"suburb": "Sandgate", "longitude": 153.069, "latitude": -27.321},
+          {"suburb": "Wynnum", "longitude": 153.173, "latitude": -27.442},
+          {"suburb": "Indooroopilly", "longitude": 152.973, "latitude": -27.499},
+          {"suburb": "Sunnybank", "longitude": 153.059, "latitude": -27.579},
+          {"suburb": "Inala", "longitude": 152.974, "latitude": -27.598}
+        ]
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "suburb"}
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "clip": true,
+            "dy": -10,
+            "fontSize": 11.5,
+            "fontWeight": 600,
+            "stroke": "#e1e8e5",
+            "strokeWidth": 3,
+            "strokeJoin": "round"
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "clip": true,
+            "dy": -10,
+            "fontSize": 11.5,
+            "fontWeight": 600
+          }
+        }
+      ]
+    }
+  ]
+}

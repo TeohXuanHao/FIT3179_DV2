@@ -1,0 +1,211 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Choropleth map - attendances per 1,000 residents at council library programs by council area from 2024 to 2025",
+  "width": "container",
+  "height": 520,
+  "params": [
+    {
+      "name": "region",
+      "value": "Eastern Australia",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Eastern Australia",
+          "Greater Sydney",
+          "Greater Melbourne",
+          "South-east Queensland"
+        ],
+        "name": "Zoom to ",
+        "element": "#zoom-control"
+      }
+    },
+    {
+      "name": "view",
+      "expr": "{'Eastern Australia': {lon: 146, lat: -25, scale: 950}, 'Greater Sydney': {lon: 150.95, lat: -33.8, scale: 24000}, 'Greater Melbourne': {lon: 145.05, lat: -37.85, scale: 24000}, 'South-east Queensland': {lon: 152.8, lat: -27.4, scale: 14000}}[region]"
+    }
+  ],
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-18, -36],
+    "rotate": {"expr": "[-view.lon, 0]"},
+    "center": {"expr": "[0, view.lat]"},
+    "scale": {"expr": "view.scale"},
+    "translate": {"expr": "[width / 2, height / 2]"}
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/states.topojson",
+        "format": {"type": "topojson", "feature": "states"}
+      },
+      "mark": {"type": "geoshape", "clip": true, "fill": "#d6dedb"}
+    },
+    {
+      "data": {
+        "url": "data/lga_2025.topojson",
+        "format": {"type": "topojson", "feature": "lga"}
+      },
+      "transform": [
+        {"calculate": "'Not published council by council'", "as": "note"}
+      ],
+      "mark": {
+        "type": "geoshape",
+        "clip": true,
+        "fill": "#d6dedb",
+        "stroke": "#f4f7f5",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "tooltip": [
+          {"field": "properties.lga_name", "title": "Council area"},
+          {"field": "properties.state_name", "title": "State"},
+          {"field": "note", "title": "Attendances"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/lga_2025.topojson",
+        "format": {"type": "topojson", "feature": "lga"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.lga_code",
+          "from": {
+            "data": {
+              "url": "data/library_programs_by_lga_2024-25.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "lga_code": "string",
+                  "attendance": "number",
+                  "attendance_per_1000": "number",
+                  "population": "number"
+                }
+              }
+            },
+            "key": "lga_code",
+            "fields": ["attendance", "attendance_per_1000", "population"]
+          }
+        },
+        {"filter": "datum.attendance != null"}
+      ],
+      "mark": {
+        "type": "geoshape",
+        "clip": true,
+        "stroke": "#f4f7f5",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "color": {
+          "field": "attendance_per_1000",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [150, 250, 350, 500],
+            "range": ["#cfe6e2", "#93cbc6", "#52aaa6", "#1f8283", "#0b4f55"]
+          },
+          "legend": {
+            "title": "Attendances per 1,000 residents",
+            "type": "symbol",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "symbolType": "square",
+            "labelExpr": "datum.index == 0 ? 'Under 150' : datum.index == 4 ? '500 or more' : replace(datum.label, ' – ', ' to ')"
+          }
+        },
+        "tooltip": [
+          {"field": "properties.lga_name", "title": "Council area"},
+          {"field": "properties.state_name", "title": "State"},
+          {
+            "field": "attendance_per_1000",
+            "title": "Attendances per 1,000 residents",
+            "format": ",.0f"
+          },
+          {"field": "attendance", "title": "Attendances", "format": ","},
+          {"field": "population", "title": "Residents", "format": ","}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/states.topojson",
+        "format": {"type": "topojson", "mesh": "states"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "clip": true,
+        "filled": false,
+        "stroke": "#10292e",
+        "strokeWidth": 0.6,
+        "strokeOpacity": 0.55
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 150.51,
+            "latitude": -23.38,
+            "note": "Rockhampton: 799"
+          },
+          {"longitude": 150.69, "latitude": -33.75, "note": "Penrith: 67"}
+        ]
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"}
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "point",
+            "clip": true,
+            "size": 90,
+            "stroke": "#10292e",
+            "strokeWidth": 1.5
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "clip": true,
+            "align": "left",
+            "dx": 30,
+            "fontSize": 12,
+            "fontWeight": 600
+          },
+          "encoding": {"text": {"field": "note"}}
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 133.5,
+            "latitude": -27,
+            "note": [
+              "Shown in grey: states that",
+              "do not publish these",
+              "figures council by council"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "clip": true,
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "fill": "#47595c",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "note"}
+      }
+    }
+  ]
+}

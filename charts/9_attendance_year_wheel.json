@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Radial chart - attendance at Townsville library programs in each month of 2025",
+  "width": "container",
+  "height": 400,
+  "layer": [
+    {
+      "data": {
+        "url": "data/events_townsville_2025.csv",
+        "format": {
+          "type": "csv",
+          "parse": {"month": "number", "attendance": "number"}
+        }
+      },
+      "transform": [
+        {
+          "aggregate": [{"op": "sum", "field": "attendance", "as": "attendance"}],
+          "groupby": ["month"]
+        },
+        {"calculate": "datum.month - 1", "as": "start"},
+        {"calculate": "datum.month - 0.5", "as": "middle"},
+        {
+          "calculate": "[monthAbbrevFormat(datum.month - 1), format(datum.attendance, ',')]",
+          "as": "label"
+        },
+        {
+          "calculate": "datum.month >= 6 && datum.month <= 8 ? 'Winter (June to August)' : 'Rest of the year'",
+          "as": "season"
+        }
+      ],
+      "encoding": {
+        "radius": {
+          "field": "attendance",
+          "type": "quantitative",
+          "scale": {"type": "sqrt", "zero": true, "rangeMin": 24}
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "arc",
+            "innerRadius": 24,
+            "stroke": "#f4f7f5",
+            "strokeWidth": 2
+          },
+          "encoding": {
+            "theta": {
+              "field": "start",
+              "type": "quantitative",
+              "scale": {"domain": [0, 12]}
+            },
+            "theta2": {"field": "month"},
+            "color": {
+              "field": "season",
+              "type": "nominal",
+              "scale": {
+                "domain": ["Winter (June to August)", "Rest of the year"],
+                "range": ["#0e5a5f", "#7fbdb9"]
+              },
+              "legend": {"title": null, "orient": "top", "symbolType": "square"}
+            },
+            "tooltip": [
+              {"field": "label", "title": "Month and attendances"}
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "radiusOffset": 24,
+            "fontSize": 11.5,
+            "lineHeight": 13
+          },
+          "encoding": {
+            "theta": {
+              "field": "middle",
+              "type": "quantitative",
+              "scale": {"domain": [0, 12]}
+            },
+            "text": {"field": "label"}
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "note": [
+              "August includes one",
+              "festival day that",
+              "drew 5,041 people"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "x": {"expr": "width"},
+        "y": {"expr": "height - 28"},
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "fill": "#47595c",
+        "lineHeight": 14
+      },
+      "encoding": {"text": {"field": "note"}}
+    }
+  ]
+}

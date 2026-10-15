@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Slope chart - where Townsville library programs were held in 2025, as a share of sessions and as a share of attendance",
+  "width": "container",
+  "height": 360,
+  "data": {
+    "url": "data/events_townsville_2025.csv",
+    "format": {"type": "csv", "parse": {"attendance": "number"}}
+  },
+  "transform": [
+    {"filter": "datum.location != ''"},
+    {
+      "calculate": "datum.venue_type == 'Library' ? 'Inside a library' : datum.location == 'Park' ? 'In a park' : 'Schools and other places'",
+      "as": "place"
+    },
+    {
+      "aggregate": [
+        {"op": "count", "as": "sessions"},
+        {"op": "sum", "field": "attendance", "as": "people"}
+      ],
+      "groupby": ["place"]
+    },
+    {
+      "joinaggregate": [
+        {"op": "sum", "field": "sessions", "as": "all_sessions"},
+        {"op": "sum", "field": "people", "as": "all_people"}
+      ]
+    },
+    {"calculate": "datum.sessions / datum.all_sessions", "as": "Sessions held"},
+    {"calculate": "datum.people / datum.all_people", "as": "People attending"},
+    {"fold": ["Sessions held", "People attending"], "as": ["measure", "share"]},
+    {
+      "calculate": "datum.measure == 'Sessions held' ? format(datum.share, '.0%') + ' of sessions (' + format(datum.sessions, ',') + ')' : [datum.place, format(datum.share, '.0%') + ' of people (' + format(datum.people, ',') + ')']",
+      "as": "label"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "measure",
+      "type": "nominal",
+      "sort": ["Sessions held", "People attending"],
+      "scale": {"padding": 1.1},
+      "axis": {
+        "title": null,
+        "orient": "top",
+        "labelAngle": 0,
+        "labelFontSize": 13,
+        "labelFontWeight": 600,
+        "labelColor": "#10292e",
+        "domain": false,
+        "ticks": false,
+        "grid": true
+      }
+    },
+    "y": {
+      "field": "share",
+      "type": "quantitative",
+      "scale": {"domain": [0, 1]},
+      "axis": null
+    },
+    "color": {
+      "field": "place",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Inside a library", "In a park", "Schools and other places"],
+        "range": ["#2a78d6", "#008300", "#eda100"]
+      },
+      "legend": null
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "point": {"size": 90, "filled": true, "opacity": 1}
+      }
+    },
+    {
+      "transform": [{"filter": "datum.measure == 'Sessions held'"}],
+      "mark": {"type": "text", "align": "right", "dx": -12},
+      "encoding": {
+        "text": {"field": "label"},
+        "color": {"value": "#10292e"}
+      }
+    },
+    {
+      "transform": [{"filter": "datum.measure == 'People attending'"}],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "dy": -7,
+        "lineHeight": 14
+      },
+      "encoding": {
+        "text": {"field": "label"},
+        "color": {"value": "#10292e"}
+      }
+    }
+  ]
+}

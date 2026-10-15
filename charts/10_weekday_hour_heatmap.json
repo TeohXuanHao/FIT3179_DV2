@@ -1,0 +1,67 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Heatmap - Brisbane City Council events in 2025 by day of the week and its start time",
+  "width": "container",
+  "height": 250,
+  "data": {
+    "url": "data/events_brisbane_2025.csv",
+    "format": {"type": "csv", "parse": {"hour": "number"}}
+  },
+  "transform": [
+    {"filter": "datum.hour >= 6 && datum.hour <= 19"},
+    {
+      "aggregate": [{"op": "count", "as": "events"}],
+      "groupby": ["weekday", "hour"]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "hour",
+      "type": "ordinal",
+      "scale": {"paddingInner": 0.06},
+      "axis": {
+        "title": "Start time",
+        "orient": "top",
+        "labelAngle": 0,
+        "domain": false,
+        "ticks": false,
+        "labelExpr": "datum.value == 12 ? '12 pm' : datum.value < 12 ? datum.value + ' am' : datum.value - 12 + ' pm'"
+      }
+    },
+    "y": {
+      "field": "weekday",
+      "type": "ordinal",
+      "sort": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "scale": {"paddingInner": 0.06},
+      "axis": {"title": null, "domain": false, "ticks": false}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rect", "cornerRadius": 2},
+      "encoding": {
+        "color": {
+          "field": "events",
+          "type": "quantitative",
+          "scale": {"scheme": "teals", "domain": [0, 1500]},
+          "legend": {
+            "title": "Events in the year",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 180
+          }
+        },
+        "tooltip": [
+          {"field": "weekday", "title": "Day"},
+          {"field": "hour", "title": "Start hour (24-hour clock)"},
+          {"field": "events", "title": "Events in 2025", "format": ","}
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.events >= 900"}],
+      "mark": {"type": "text", "fill": "#ffffff", "fontWeight": 600},
+      "encoding": {"text": {"field": "events", "format": ","}}
+    }
+  ]
+}

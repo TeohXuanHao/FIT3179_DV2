@@ -1,0 +1,86 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Dumbbell chart - residents' satisfaction with community consultation in Victoria in 2020 to 2021 and 2024 to 2025, by the type of council",
+  "width": "container",
+  "height": 310,
+  "data": {
+    "url": "data/vic_council_performance_2020-25.csv",
+    "format": {"type": "csv", "parse": {"year": "string", "engagement_satisfaction": "number"}}
+  },
+  "transform": [
+    {"filter": "datum.year == '2020-21' || datum.year == '2024-25'"},
+    {"filter": "datum.engagement_satisfaction != null"},
+    {
+      "calculate": "{'Metro': 'Melbourne metropolitan', 'Interface': 'Edge of Melbourne', 'Regional': 'Regional cities', 'Regional City': 'Regional cities', 'Large Shire': 'Large country shires', 'Small Shire': 'Small country shires'}[datum.council_group]",
+      "as": "group"
+    },
+    {
+      "aggregate": [
+        {"op": "mean", "field": "engagement_satisfaction", "as": "score"},
+        {"op": "count", "as": "councils"}
+      ],
+      "groupby": ["group", "year"]
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "group",
+      "type": "nominal",
+      "sort": [
+        "Melbourne metropolitan",
+        "Edge of Melbourne",
+        "Small country shires",
+        "Regional cities",
+        "Large country shires"
+      ],
+      "axis": {
+        "title": null,
+        "domain": false,
+        "ticks": false,
+        "grid": true,
+        "labelColor": "#10292e",
+        "labelFontWeight": 600
+      }
+    },
+    "x": {
+      "field": "score",
+      "type": "quantitative",
+      "scale": {"domain": [44, 68]},
+      "axis": {
+        "title": "Average satisfaction score out of 100",
+        "grid": false,
+        "tickCount": 6
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "line", "stroke": "#9fb1ae", "strokeWidth": 4},
+      "encoding": {"detail": {"field": "group"}}
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 190, "opacity": 1},
+      "encoding": {
+        "color": {
+          "field": "year",
+          "type": "nominal",
+          "scale": {
+            "domain": ["2020-21", "2024-25"],
+            "range": ["#9fb1ae", "#0e5a5f"]
+          },
+          "legend": {"title": "Survey year", "orient": "top"}
+        },
+        "tooltip": [
+          {"field": "group", "title": "Type of council"},
+          {"field": "year", "title": "Survey year"},
+          {"field": "score", "title": "Average score out of 100", "format": ".1f"},
+          {"field": "councils", "title": "Councils"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "dy": -16, "fontWeight": 600},
+      "encoding": {"text": {"field": "score", "format": ".0f"}}
+    }
+  ]
+}

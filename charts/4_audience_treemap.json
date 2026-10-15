@@ -1,0 +1,174 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Treemap - Brisbane City Council events in 2025 based on the intended audience for each event",
+  "autosize": {"type": "fit-x", "contains": "padding"},
+  "height": 430,
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
+    }
+  ],
+  "data": [
+    {
+      "name": "events",
+      "url": "data/events_brisbane_2025.csv",
+      "format": {"type": "csv", "parse": "auto"},
+      "transform": [
+        {
+          "type": "formula",
+          "as": "audience",
+          "expr": "datum.audience || 'Not stated'"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["audience", "category_group"],
+          "as": ["events"]
+        }
+      ]
+    },
+    {
+      "name": "totals",
+      "source": "events",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["audience"],
+          "ops": ["sum"],
+          "fields": ["events"],
+          "as": ["total"]
+        }
+      ]
+    },
+    {
+      "name": "tree",
+      "source": "events",
+      "transform": [
+        {"type": "nest", "keys": ["audience"], "generate": true},
+        {
+          "type": "treemap",
+          "field": "events",
+          "sort": {"field": "value", "order": "descending"},
+          "method": "squarify",
+          "round": true,
+          "paddingInner": 2,
+          "paddingTop": 24,
+          "size": [{"signal": "width"}, {"signal": "height"}]
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "tree",
+      "transform": [
+        {"type": "filter", "expr": "datum.depth == 1"},
+        {
+          "type": "lookup",
+          "from": "totals",
+          "key": "audience",
+          "fields": ["key"],
+          "values": ["total"]
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [{"type": "filter", "expr": "!datum.children"}]
+    }
+  ],
+  "scales": [
+    {
+      "name": "colour",
+      "type": "ordinal",
+      "domain": [
+        "Early childhood",
+        "Children",
+        "Young people",
+        "Adults",
+        "Seniors",
+        "All ages",
+        "Not stated"
+      ],
+      "range": [
+        "#eda100",
+        "#e34948",
+        "#008300",
+        "#2a78d6",
+        "#4a3aa7",
+        "#1baf7a",
+        "#8c9895"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": {"value": 0},
+          "y": {"value": 15},
+          "text": {
+            "value": "The area of each rectangle shows the number of events"
+          },
+          "fontStyle": {"value": "italic"},
+          "fill": {"value": "#47595c"}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "leaves"},
+      "encode": {
+        "enter": {
+          "fill": {"scale": "colour", "field": "audience"},
+          "tooltip": {
+            "signal": "{'Audience': datum.audience, 'Kind of event': datum.category_group, 'Events in 2025': format(datum.events, ',')}"
+          }
+        },
+        "update": {
+          "x": {"field": "x0"},
+          "y": {"field": "y0"},
+          "x2": {"field": "x1"},
+          "y2": {"field": "y1"},
+          "fillOpacity": {"value": 0.5}
+        },
+        "hover": {"fillOpacity": {"value": 0.7}}
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "groups"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"field": "x0"},
+          "y": {"field": "y0", "offset": 16},
+          "text": {
+            "signal": "datum.x1 - datum.x0 > 150 ? datum.key + '  ' + format(datum.total, ',') : datum.key"
+          },
+          "fontWeight": {"value": 600},
+          "fontSize": {"value": 13},
+          "limit": {"signal": "max(datum.x1 - datum.x0, 86)"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "leaves"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"field": "x0", "offset": 7},
+          "y": {"field": "y0", "offset": 18},
+          "text": {
+            "signal": "datum.x1 - datum.x0 > 80 && datum.y1 - datum.y0 > 40 ? [datum.category_group, format(datum.events, ',')] : ''"
+          },
+          "lineHeight": {"value": 15},
+          "limit": {"signal": "datum.x1 - datum.x0 - 12"}
+        }
+      }
+    }
+  ]
+}

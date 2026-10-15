@@ -1,0 +1,131 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Lollipop chart - average number of people at one session in each type of Townsville library program in 2025",
+  "width": "container",
+  "height": 500,
+  "data": {
+    "url": "data/events_townsville_2025.csv",
+    "format": {"type": "csv", "parse": {"attendance": "number"}}
+  },
+  "transform": [
+    {"filter": "datum.attendance != null"},
+    {"filter": "!test(/^Other/, datum.event_type)"},
+    {
+      "calculate": "test(/^F5F /, datum.event_type) ? 'First 5 Forever, for children under five' : 'Other library programs'",
+      "as": "program"
+    },
+    {
+      "calculate": "replace(replace(datum.event_type, /^F5F /, ''), / Session \\d$/, '')",
+      "as": "kind"
+    },
+    {
+      "calculate": "datum.kind == 'Outreach' ? 'Community outreach' : datum.kind",
+      "as": "kind"
+    },
+    {
+      "aggregate": [
+        {"op": "count", "as": "sessions"},
+        {"op": "sum", "field": "attendance", "as": "people"}
+      ],
+      "groupby": ["kind", "program"]
+    },
+    {"filter": "datum.sessions >= 5"},
+    {"calculate": "datum.people / datum.sessions", "as": "average"},
+    {
+      "calculate": "format(datum.average, '.0f') + ' (' + format(datum.sessions, ',') + ' sessions)'",
+      "as": "label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "kind",
+      "type": "nominal",
+      "sort": {"field": "average", "order": "descending"},
+      "axis": {
+        "title": null,
+        "domain": false,
+        "ticks": false,
+        "labelColor": "#10292e",
+        "labelLimit": 220
+      }
+    },
+    "x": {
+      "field": "average",
+      "type": "quantitative",
+      "scale": {"domain": [0, 250]},
+      "axis": {"title": "Average people at one session", "tickCount": 5}
+    },
+    "color": {
+      "field": "program",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "First 5 Forever, for children under five",
+          "Other library programs"
+        ],
+        "range": ["#eda100", "#2b8b8c"]
+      },
+      "legend": {"title": null, "orient": "top"}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 2},
+      "encoding": {"x2": {"datum": 0}}
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 110, "opacity": 1},
+      "encoding": {
+        "tooltip": [
+          {"field": "kind", "title": "Kind of session"},
+          {"field": "program", "title": "Program"},
+          {"field": "sessions", "title": "Sessions in 2025", "format": ","},
+          {"field": "people", "title": "People attending", "format": ","},
+          {"field": "average", "title": "Average people at one session", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 10},
+      "encoding": {
+        "text": {"field": "label"},
+        "color": {"value": "#10292e"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "position": 110,
+            "note": [
+              "Expos and outreach sessions in parks,",
+              "schools and playgroups draw the most"
+            ]
+          },
+          {
+            "position": 400,
+            "note": [
+              "The most common kind of session,",
+              "the information session, averaged",
+              "fewer than 4 people"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "top",
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "x": {"value": "width"},
+        "y": {"field": "position", "type": "quantitative", "scale": null},
+        "color": {"value": "#47595c"},
+        "text": {"field": "note"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Proportional symbol map - attendances at council library programs by state and territory from 2023 to 2024",
+  "width": "container",
+  "height": 400,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [-18, -36],
+    "rotate": [-134, 0]
+  },
+  "data": {
+    "url": "data/states.topojson",
+    "format": {"type": "topojson", "feature": "states"}
+  },
+  "transform": [
+    {"filter": "datum.properties.state_code != '9'"}
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e1e8e5",
+        "stroke": "#f4f7f5",
+        "strokeWidth": 1.5
+      }
+    },
+    {
+      "transform": [
+        {
+          "lookup": "properties.state_code",
+          "from": {
+            "data": {
+              "url": "data/library_programs_by_state_2023-24.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "state_code": "string",
+                  "attendance": "number",
+                  "sessions": "number",
+                  "attendance_per_1000": "number"
+                }
+              }
+            },
+            "key": "state_code",
+            "fields": [
+              "state",
+              "state_name",
+              "attendance",
+              "sessions",
+              "attendance_per_1000"
+            ]
+          }
+        },
+        {"calculate": "geoCentroid(null, datum)", "as": "centre"},
+        {
+          "calculate": "datum.centre[0] + (datum.state == 'ACT' ? 0.6 : 0)",
+          "as": "longitude"
+        },
+        {"calculate": "datum.centre[1]", "as": "latitude"}
+      ],
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"}
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "opacity": 0.9,
+            "stroke": "#f4f7f5",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "size": {
+              "field": "attendance",
+              "type": "quantitative",
+              "scale": {"domain": [0, 2000000], "range": [0, 3400]},
+              "legend": {
+                "title": "Attendances in the year",
+                "values": [100000, 1000000, 2000000],
+                "labelExpr": "datum.value < 1e6 ? format(datum.value, ',') : format(datum.value / 1e6, 'd') + ' million'",
+                "symbolFillColor": "#8fa3a0",
+                "symbolStrokeWidth": 0,
+                "orient": "bottom",
+                "direction": "horizontal"
+              }
+            },
+            "color": {
+              "field": "attendance_per_1000",
+              "type": "quantitative",
+              "scale": {"scheme": "teals", "domain": [100, 400]},
+              "legend": {
+                "title": "Attendances per 1,000 residents",
+                "orient": "top",
+                "direction": "horizontal",
+                "gradientLength": 150
+              }
+            },
+            "order": {"field": "attendance", "sort": "descending"},
+            "tooltip": [
+              {"field": "state_name", "title": "State or territory"},
+              {"field": "attendance", "title": "Attendances", "format": ","},
+              {"field": "sessions", "title": "Sessions held", "format": ","},
+              {
+                "field": "attendance_per_1000",
+                "title": "Attendances per 1,000 residents",
+                "format": ".0f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "calculate": "datum.state + ' ' + format(datum.attendance_per_1000, '.0f')",
+              "as": "label"
+            },
+            {
+              "calculate": "datum.attendance > 1000000 || datum.state == 'ACT' ? datum.latitude : datum.latitude - 2",
+              "as": "label_latitude"
+            },
+            {
+              "calculate": "datum.state == 'ACT' ? datum.longitude + 3.7 : datum.longitude",
+              "as": "label_longitude"
+            }
+          ],
+          "mark": {"type": "text", "fontSize": 12, "fontWeight": 600},
+          "encoding": {
+            "longitude": {"field": "label_longitude", "type": "quantitative"},
+            "latitude": {"field": "label_latitude", "type": "quantitative"},
+            "text": {"field": "label"}
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 131,
+            "latitude": -38.5,
+            "note": ["South Australia: the highest", "rate in the country"]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "fill": "#47595c",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "note"}
+      }
+    }
+  ]
+}

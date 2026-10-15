@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "100% stacked bar chart - attendance at council library programs by age group in three states from 2024 to 2025",
+  "width": "container",
+  "height": 260,
+  "data": {"url": "data/library_programs_long_2024-25.csv"},
+  "transform": [
+    {
+      "filter": "datum.dimension == 'audience' || (datum.state == 'QLD' && datum.dimension == 'focus')"
+    },
+    {
+      "calculate": "datum.dimension == 'audience' && datum.category == 'Early childhood' ? 'Early childhood' : datum.dimension == 'audience' && datum.category == 'Children' ? 'Children' : datum.dimension == 'audience' && datum.category == 'Young adults' ? 'Young people' : 'Adults, seniors and all ages'",
+      "as": "group"
+    },
+    {
+      "aggregate": [{"op": "sum", "field": "attendance", "as": "attendance"}],
+      "groupby": ["state", "group"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "attendance", "as": "total"}],
+      "groupby": ["state"]
+    },
+    {"calculate": "datum.attendance / datum.total", "as": "share"},
+    {
+      "calculate": "{'NSW': 'New South Wales', 'VIC': 'Victoria', 'QLD': 'Queensland'}[datum.state]",
+      "as": "state_name"
+    },
+    {
+      "calculate": "indexof(['Early childhood', 'Children', 'Young people', 'Adults, seniors and all ages'], datum.group)",
+      "as": "position"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "state_name",
+      "type": "nominal",
+      "sort": ["New South Wales", "Victoria", "Queensland"],
+      "scale": {"paddingInner": 0.35},
+      "axis": {"title": null, "domain": false, "ticks": false}
+    },
+    "x": {
+      "field": "share",
+      "type": "quantitative",
+      "stack": "zero",
+      "scale": {"domain": [0, 1]},
+      "axis": {"title": "Share of all attendances", "format": "%", "tickCount": 5}
+    },
+    "order": {"field": "position"}
+  },
+  "layer": [
+    {
+      "mark": {"type": "bar", "stroke": "#f4f7f5", "strokeWidth": 2},
+      "encoding": {
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Early childhood",
+              "Children",
+              "Young people",
+              "Adults, seniors and all ages"
+            ],
+            "range": ["#eda100", "#e34948", "#008300", "#2a78d6"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "symbolType": "square",
+            "columns": 2
+          }
+        },
+        "tooltip": [
+          {"field": "state_name", "title": "State"},
+          {"field": "group", "title": "Programs for"},
+          {"field": "attendance", "title": "Attendances", "format": ","},
+          {"field": "share", "title": "Share", "format": ".0%"}
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.share >= 0.08"}],
+      "mark": {"type": "text", "fontWeight": 600, "fontSize": 13},
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.group == 'Early childhood'",
+            "value": "#10292e"
+          },
+          "value": "#ffffff"
+        },
+        "x": {
+          "field": "share",
+          "type": "quantitative",
+          "stack": "zero",
+          "bandPosition": 0.5
+        },
+        "text": {"field": "share", "format": ".0%"}
+      }
+    }
+  ]
+}

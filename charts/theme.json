@@ -1,0 +1,44 @@
+{
+  "background": null,
+  "font": "Public Sans, system-ui, sans-serif",
+  "padding": 4,
+  "view": {"stroke": null},
+  "axis": {
+    "labelFont": "Public Sans, system-ui, sans-serif",
+    "titleFont": "Public Sans, system-ui, sans-serif",
+    "labelColor": "#47595c",
+    "labelFontSize": 12,
+    "labelPadding": 6,
+    "titleColor": "#47595c",
+    "titleFontSize": 12,
+    "titleFontWeight": 500,
+    "titlePadding": 10,
+    "gridColor": "#dde5e2",
+    "domainColor": "#b4c2bf",
+    "tickColor": "#b4c2bf",
+    "tickSize": 4
+  },
+  "legend": {
+    "labelFont": "Public Sans, system-ui, sans-serif",
+    "titleFont": "Public Sans, system-ui, sans-serif",
+    "labelColor": "#47595c",
+    "labelFontSize": 12,
+    "labelLimit": 280,
+    "titleColor": "#47595c",
+    "titleFontSize": 12,
+    "titleFontWeight": 500,
+    "titleLimit": 320,
+    "symbolType": "circle"
+  },
+  "text": {
+    "font": "Public Sans, system-ui, sans-serif",
+    "fontSize": 12,
+    "fill": "#10292e"
+  },
+  "header": {
+    "labelFont": "Public Sans, system-ui, sans-serif",
+    "labelColor": "#10292e",
+    "labelFontSize": 14,
+    "labelFontWeight": 600
+  }
+}

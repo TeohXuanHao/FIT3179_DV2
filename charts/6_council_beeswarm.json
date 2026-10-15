@@ -1,0 +1,195 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Beeswarm plot - attendances per 1,000 residents at council library programs, one circle per council area from 2024 to 2025",
+  "autosize": {"type": "fit-x", "contains": "padding"},
+  "height": 400,
+  "padding": {"left": 4, "right": 16, "top": 4, "bottom": 4},
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [{"events": "window:resize", "update": "containerSize()[0]"}]
+    },
+    {
+      "name": "named",
+      "value": ["Rockhampton", "Penrith", "Brisbane", "Sydney", "Melbourne"]
+    }
+  ],
+  "data": [
+    {
+      "name": "councils",
+      "url": "data/library_programs_by_lga_2024-25.csv",
+      "format": {"type": "csv", "parse": "auto"},
+      "transform": [
+        {
+          "type": "formula",
+          "as": "shown_rate",
+          "expr": "min(datum.attendance_per_1000, 1000)"
+        },
+        {
+          "type": "formula",
+          "as": "state_name",
+          "expr": "{'NSW': 'New South Wales', 'VIC': 'Victoria', 'QLD': 'Queensland'}[datum.state]"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": [0, 1000],
+      "range": "width"
+    },
+    {
+      "name": "y",
+      "type": "band",
+      "domain": ["New South Wales", "Victoria", "Queensland"],
+      "range": "height"
+    },
+    {
+      "name": "size",
+      "type": "linear",
+      "domain": [0, 1400000],
+      "range": [30, 1500]
+    }
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "x",
+      "title": "Attendances per 1,000 residents",
+      "tickCount": 5,
+      "grid": true,
+      "domain": false,
+      "encode": {
+        "labels": {
+          "update": {
+            "text": {
+              "signal": "datum.value == 1000 ? '1,000 or more' : format(datum.value, ',')"
+            }
+          }
+        }
+      }
+    },
+    {
+      "orient": "left",
+      "scale": "y",
+      "domain": false,
+      "ticks": false,
+      "labelFontWeight": 600,
+      "labelColor": "#10292e"
+    }
+  ],
+  "legends": [
+    {
+      "size": "size",
+      "title": "Residents",
+      "orient": "top",
+      "direction": "horizontal",
+      "values": [50000, 500000, 1300000],
+      "format": ",d",
+      "symbolFillColor": "#2b8b8c",
+      "symbolOpacity": 0.75,
+      "symbolStrokeWidth": 0
+    }
+  ],
+  "marks": [
+    {
+      "name": "nodes",
+      "type": "symbol",
+      "from": {"data": "councils"},
+      "encode": {
+        "enter": {
+          "size": {"scale": "size", "field": "population"},
+          "stroke": {"value": "#f4f7f5"},
+          "strokeWidth": {"value": 1},
+          "tooltip": {
+            "signal": "{'Council area': datum.lga_name, 'State': datum.state_name, 'Attendances per 1,000 residents': format(datum.attendance_per_1000, ',.0f'), 'Attendances': format(datum.attendance, ','), 'Residents': format(datum.population, ',')}"
+          }
+        },
+        "update": {
+          "xfocus": {"scale": "x", "field": "shown_rate"},
+          "yfocus": {"scale": "y", "field": "state_name", "band": 0.5},
+          "fill": {
+            "signal": "indexof(named, datum.lga_name) >= 0 ? '#eda100' : '#2b8b8c'"
+          },
+          "fillOpacity": {"value": 0.8}
+        },
+        "hover": {"fillOpacity": {"value": 1}}
+      },
+      "transform": [
+        {
+          "type": "force",
+          "iterations": 300,
+          "static": true,
+          "restart": true,
+          "forces": [
+            {
+              "force": "collide",
+              "iterations": 2,
+              "radius": {"expr": "sqrt(datum.size) / 2 + 0.5"}
+            },
+            {"force": "x", "x": "xfocus", "strength": 0.6},
+            {"force": "y", "y": "yfocus", "strength": 0.06}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "from": {"data": "nodes"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"field": "x"},
+          "y": {"field": "y", "offset": {"signal": "-sqrt(datum.size) / 2 - 5"}},
+          "text": {
+            "signal": "indexof(named, datum.datum.lga_name) >= 0 ? datum.datum.lga_name + ' ' + format(datum.datum.attendance_per_1000, '.0f') : ''"
+          },
+          "align": {"value": "center"},
+          "fontWeight": {"value": 600},
+          "stroke": {"value": "#f4f7f5"},
+          "strokeWidth": {"value": 3},
+          "strokeJoin": {"value": "round"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "nodes"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"field": "x"},
+          "y": {"field": "y", "offset": {"signal": "-sqrt(datum.size) / 2 - 5"}},
+          "text": {
+            "signal": "indexof(named, datum.datum.lga_name) >= 0 ? datum.datum.lga_name + ' ' + format(datum.datum.attendance_per_1000, '.0f') : ''"
+          },
+          "align": {"value": "center"},
+          "fontWeight": {"value": 600}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {"signal": "width"},
+          "y": {"scale": "y", "value": "Queensland", "offset": 4},
+          "text": {
+            "value": [
+              "Seven remote councils with",
+              "under 15,000 residents are",
+              "above 1,000. Winton: 4,800"
+            ]
+          },
+          "align": {"value": "right"},
+          "fontStyle": {"value": "italic"},
+          "fill": {"value": "#47595c"},
+          "lineHeight": {"value": 14}
+        }
+      }
+    }
+  ]
+}

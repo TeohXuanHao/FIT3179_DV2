@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Histogram - Townsville library program sessions in 2025 by number of people attending",
+  "width": "container",
+  "height": 470,
+  "data": {
+    "url": "data/events_townsville_2025.csv",
+    "format": {"type": "csv", "parse": {"attendance": "number"}}
+  },
+  "transform": [
+    {"filter": "datum.attendance != null"},
+    {"calculate": "min(datum.attendance, 100)", "as": "people"}
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "fill": "#2b8b8c",
+        "binSpacing": 2,
+        "cornerRadiusEnd": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "people",
+          "bin": {"step": 10, "extent": [0, 110]},
+          "axis": {
+            "title": "People at one session",
+            "values": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            "labelExpr": "datum.value == 100 ? '100+' : datum.label",
+            "grid": false
+          }
+        },
+        "y": {
+          "aggregate": "count",
+          "axis": {"title": "Sessions", "domain": false, "ticks": false}
+        },
+        "tooltip": [
+          {
+            "field": "people",
+            "bin": {"step": 10, "extent": [0, 110]},
+            "title": "People at one session"
+          },
+          {"aggregate": "count", "title": "Sessions"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "people": 12,
+            "sessions": 560,
+            "note": [
+              "579 sessions, almost half,",
+              "had fewer than 10 people"
+            ]
+          },
+          {
+            "people": 58,
+            "sessions": 300,
+            "note": [
+              "36 sessions drew 100 or more.",
+              "The largest, a festival day",
+              "in August, drew 5,041"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 11.5,
+        "fontStyle": "italic",
+        "fill": "#47595c",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "x": {"field": "people", "type": "quantitative"},
+        "y": {"field": "sessions", "type": "quantitative"},
+        "text": {"field": "note"}
+      }
+    }
+  ]
+}
