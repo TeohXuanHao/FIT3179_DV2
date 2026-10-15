@@ -275,6 +275,10 @@ select:focus-visible {
   display: block;
 }
 
+.chart + .fig-sub {
+  margin-top: 16px;
+}
+
 .fig figcaption {
   max-width: 78ch;
   margin-top: 14px;
