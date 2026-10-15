@@ -1,0 +1,9 @@
+year,state_code,state,state_name,population,sessions,attendance,attendance_per_1000,sessions_per_1000,attendance_per_session
+2023-24,8,ACT,Australian Capital Territory,478430,3362,52881,110.5,7.0,15.7
+2023-24,1,NSW,New South Wales,8492050,98735,1684169,198.3,11.6,17.1
+2023-24,7,NT,Northern Territory,260884,4652,62669,240.2,17.8,13.5
+2023-24,3,QLD,Queensland,5571890,79294,1655465,297.1,14.2,20.9
+2023-24,4,SA,South Australia,1882164,64006,694498,369.0,34.0,10.9
+2023-24,6,TAS,Tasmania,574765,5428,86407,150.3,9.4,15.9
+2023-24,2,VIC,Victoria,6950961,102387,2011429,289.4,14.7,19.6
+2023-24,5,WA,Western Australia,2978147,51580,784935,263.6,17.3,15.2
