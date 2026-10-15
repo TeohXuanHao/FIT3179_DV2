@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How do Australian councils promote community participation?</title>
+  <meta name="description" content="A data story about the events Australian local councils run: where they happen, what they are, who comes, and how councils encourage people to take part.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script defer src="js/embed.js"></script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>How do councils get Australians to take part?</h1>
+    <p class="hero-sub">A year of local council events across Australia</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="part">
+    <header class="part-head">
+      <div>
+        <h2>Explore</h2>
+      </div>
+    </header>
+
+    <div class="row">
+      <figure class="fig span-5">
+        <h3 class="fig-title">Library program attendance by state</h3>
+        <div class="chart" data-chart="1_states_symbol_map"></div>
+      </figure>
+
+      <figure class="fig span-7">
+        <h3 class="fig-title">Attendance per 1,000 residents by council</h3>
+        <div class="control" id="zoom-control"></div>
+        <div class="chart" data-chart="2_council_choropleth"></div>
+      </figure>
+
+      <figure class="fig span-12">
+        <h3 class="fig-title">Brisbane events each day of 2025</h3>
+        <div class="chart" data-chart="3_calendar_heatmap"></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="part">
+    <header class="part-head">
+      <div>
+        <h2>Compare</h2>
+      </div>
+    </header>
+
+    <div class="row">
+      <figure class="fig span-7">
+        <h4 class="fig-title">Brisbane events by audience</h4>
+        <div class="chart" data-chart="4_audience_treemap"></div>
+      </figure>
+
+      <figure class="fig span-5">
+        <h4 class="fig-title">Library attendance by age group</h4>
+        <div class="chart" data-chart="5_library_age_groups"></div>
+      </figure>
+    </div>
+
+    <div class="row">
+      <figure class="fig span-12">
+        <h4 class="fig-title">Attendance per 1,000 residents, every council</h4>
+        <div class="chart" data-chart="6_council_beeswarm"></div>
+      </figure>
+
+      <figure class="fig span-7">
+        <h4 class="fig-title">Average session size by program kind</h4>
+        <div class="chart" data-chart="15_session_kind_lollipop"></div>
+      </figure>
+
+      <figure class="fig span-5">
+        <h4 class="fig-title">Sessions by number of people</h4>
+        <div class="chart" data-chart="7_session_size_histogram"></div>
+      </figure>
+    </div>
+
+    <div class="row">
+      <figure class="fig span-7">
+        <h4 class="fig-title">Brisbane events by month and kind</h4>
+        <div class="chart" data-chart="8_monthly_streamgraph"></div>
+      </figure>
+
+      <figure class="fig span-5">
+        <h4 class="fig-title">Townsville attendance by month</h4>
+        <div class="chart" data-chart="9_attendance_year_wheel"></div>
+      </figure>
+
+      <figure class="fig span-12">
+        <h4 class="fig-title">Brisbane events by weekday and start time</h4>
+        <div class="chart" data-chart="10_weekday_hour_heatmap"></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="part">
+    <header class="part-head">
+      <div>
+        <h2>Investigate</h2>
+      </div>
+    </header>
+
+    <div class="row">
+      <figure class="fig span-6">
+        <h3 class="fig-title">Free and no-booking events</h3>
+        <div class="chart" data-chart="11_free_waffle"></div>
+      </figure>
+
+      <figure class="fig span-6">
+        <h3 class="fig-title">Brisbane event venues</h3>
+        <div class="control" id="audience-control"></div>
+        <div class="chart" data-chart="12_venue_dot_map"></div>
+      </figure>
+
+      <figure class="fig span-6">
+        <h3 class="fig-title">Sessions vs attendance by location</h3>
+        <div class="chart" data-chart="13_outreach_slope"></div>
+      </figure>
+
+      <figure class="fig span-6">
+        <h3 class="fig-title">Satisfaction with consultation, Victoria</h3>
+        <div class="chart" data-chart="14_consultation_dumbbell"></div>
+      </figure>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
