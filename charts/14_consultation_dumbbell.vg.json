@@ -66,7 +66,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["2020-21", "2024-25"],
-            "range": ["#9fb1ae", "#0e5a5f"]
+            "range": ["#9fb1ae", "#0b4f55"]
           },
           "legend": {"title": "Survey year", "orient": "top"}
         },
@@ -79,6 +79,12 @@
       }
     },
     {
+      "transform": [{"filter": "datum.year == '2020-21'"}],
+      "mark": {"type": "text", "dy": 17, "color": "#47595c"},
+      "encoding": {"text": {"field": "score", "format": ".0f"}}
+    },
+    {
+      "transform": [{"filter": "datum.year == '2024-25'"}],
       "mark": {"type": "text", "dy": -16, "fontWeight": 600},
       "encoding": {"text": {"field": "score", "format": ".0f"}}
     }

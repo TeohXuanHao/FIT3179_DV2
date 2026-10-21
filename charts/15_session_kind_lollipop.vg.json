@@ -11,7 +11,7 @@
     {"filter": "datum.attendance != null"},
     {"filter": "!test(/^Other/, datum.event_type)"},
     {
-      "calculate": "test(/^F5F /, datum.event_type) ? 'First 5 Forever' : 'Other library programs'",
+      "calculate": "test(/^F5F /, datum.event_type) ? 'First 5 Forever, for children under five' : 'Other library programs'",
       "as": "program"
     },
     {
@@ -63,7 +63,7 @@
           "First 5 Forever, for children under five",
           "Other library programs"
         ],
-        "range": ["#eda100", "#2b8b8c"]
+        "range": ["#eda100", "#00979b"]
       },
       "legend": {"title": null, "orient": "top"}
     }

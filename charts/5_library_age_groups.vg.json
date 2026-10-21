@@ -2,14 +2,14 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "100% stacked bar chart - attendance at council library programs by age group in three states from 2024 to 2025",
   "width": "container",
-  "height": 260,
+  "height": 344,
   "data": {"url": "data/library_programs_long_2024-25.csv"},
   "transform": [
     {
       "filter": "datum.dimension == 'audience' || (datum.state == 'QLD' && datum.dimension == 'focus')"
     },
     {
-      "calculate": "datum.dimension == 'audience' && datum.category == 'Early childhood' ? 'Early childhood' : datum.dimension == 'audience' && datum.category == 'Children' ? 'Children' : datum.dimension == 'audience' && datum.category == 'Young adults' ? 'Young people' : 'Adults, seniors and all ages'",
+      "calculate": "datum.dimension == 'audience' && datum.category == 'Early childhood' ? 'Early childhood' : datum.dimension == 'audience' && datum.category == 'Children' ? 'Children' : 'Young people, adults and seniors'",
       "as": "group"
     },
     {
@@ -26,7 +26,7 @@
       "as": "state_name"
     },
     {
-      "calculate": "indexof(['Early childhood', 'Children', 'Young people', 'Adults, seniors and all ages'], datum.group)",
+      "calculate": "indexof(['Early childhood', 'Children', 'Young people, adults and seniors'], datum.group)",
       "as": "position"
     }
   ],
@@ -42,7 +42,8 @@
       "field": "share",
       "type": "quantitative",
       "stack": "zero",
-      "scale": {"domain": [0, 1]}
+      "scale": {"domain": [0, 1]},
+      "axis": {"title": null, "format": "%", "tickCount": 5}
     },
     "order": {"field": "position"}
   },
@@ -57,10 +58,9 @@
             "domain": [
               "Early childhood",
               "Children",
-              "Young people",
-              "Adults, seniors and all ages"
+              "Young people, adults and seniors"
             ],
-            "range": ["#eda100", "#e34948", "#008300", "#2a78d6"]
+            "range": ["#eda100", "#c2338f", "#c4cdca"]
           },
           "legend": {
             "title": null,
@@ -83,10 +83,10 @@
       "encoding": {
         "color": {
           "condition": {
-            "test": "datum.group == 'Early childhood'",
-            "value": "#10292e"
+            "test": "datum.group == 'Children'",
+            "value": "#ffffff"
           },
-          "value": "#ffffff"
+          "value": "#10292e"
         },
         "x": {
           "field": "share",

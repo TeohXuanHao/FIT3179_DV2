@@ -15,18 +15,18 @@
     },
     {
       "aggregate": [
-        {"op": "mean", "field": "free", "as": "were free to attend"},
+        {"op": "mean", "field": "free", "as": "were free"},
         {"op": "mean", "field": "no_booking", "as": "needed no booking"},
-        {"op": "mean", "field": "both", "as": "were free with no booking"},
-        {"op": "mean", "field": "local", "as": "were in a library or park"}
+        {"op": "mean", "field": "both", "as": "were both"},
+        {"op": "mean", "field": "local", "as": "were at a library or park"}
       ]
     },
     {
       "fold": [
-        "were free to attend",
+        "were free",
         "needed no booking",
-        "were free with no booking",
-        "were in a library or park"
+        "were both",
+        "were at a library or park"
       ],
       "as": ["measure", "share"]
     },
@@ -36,7 +36,7 @@
       "as": "heading"
     },
     {
-      "calculate": "indexof(['were free to attend', 'needed no booking', 'were free with no booking', 'were in a library or park'], datum.measure)",
+      "calculate": "indexof(['were free', 'needed no booking', 'were both', 'were at a library or park'], datum.measure)",
       "as": "position"
     },
     {"calculate": "sequence(100)", "as": "cell"},
@@ -54,8 +54,8 @@
   "columns": 2,
   "spacing": {"row": 34, "column": 56},
   "spec": {
-    "width": 190,
-    "height": 190,
+    "width": 225,
+    "height": 225,
     "mark": {"type": "rect", "cornerRadius": 3},
     "encoding": {
       "x": {
@@ -73,7 +73,7 @@
       "color": {
         "field": "counted",
         "type": "nominal",
-        "scale": {"domain": ["Yes", "No"], "range": ["#0e5a5f", "#d3dcd9"]},
+        "scale": {"domain": ["Yes", "No"], "range": ["#0b4f55", "#d3dcd9"]},
         "legend": null
       }
     }

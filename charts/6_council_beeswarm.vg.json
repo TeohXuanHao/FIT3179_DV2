@@ -3,7 +3,7 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Beeswarm plot - attendances per 1,000 residents at council library programs, one circle per council area from 2024 to 2025",
   "autosize": {"type": "fit-x", "contains": "padding"},
-  "height": 400,
+  "height": 280,
   "padding": {"left": 4, "right": 16, "top": 4, "bottom": 4},
   "signals": [
     {
@@ -48,7 +48,7 @@
       "name": "size",
       "type": "linear",
       "domain": [0, 1400000],
-      "range": [30, 1500]
+      "range": [24, 1000]
     }
   ],
   "axes": [
@@ -78,19 +78,6 @@
       "labelColor": "#10292e"
     }
   ],
-  "legends": [
-    {
-      "size": "size",
-      "title": "Residents",
-      "orient": "top",
-      "direction": "horizontal",
-      "values": [50000, 500000, 1300000],
-      "format": ",d",
-      "symbolFillColor": "#2b8b8c",
-      "symbolOpacity": 0.75,
-      "symbolStrokeWidth": 0
-    }
-  ],
   "marks": [
     {
       "name": "nodes",
@@ -108,7 +95,7 @@
         "update": {
           "xfocus": {"scale": "x", "field": "shown_rate"},
           "yfocus": {"scale": "y", "field": "state_name", "band": 0.5},
-          "fill": {"value": "#2b8b8c"},
+          "fill": {"value": "#00979b"},
           "fillOpacity": {"value": 0.8}
         },
         "hover": {"fillOpacity": {"value": 1}}
@@ -126,7 +113,7 @@
               "radius": {"expr": "sqrt(datum.size) / 2 + 0.5"}
             },
             {"force": "x", "x": "xfocus", "strength": 0.6},
-            {"force": "y", "y": "yfocus", "strength": 0.06}
+            {"force": "y", "y": "yfocus", "strength": 0.12}
           ]
         }
       ]

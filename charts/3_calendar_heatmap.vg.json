@@ -36,10 +36,11 @@
         "color": {
           "field": "events",
           "type": "quantitative",
-          "scale": {"scheme": "teals", "domain": [0, 131]},
+          "scale": {"domain": [0, 131], "range": ["#8cc4bd", "#0b4f55"], "interpolate": "hcl"},
           "legend": {
             "title": "Events that day",
             "orient": "top",
+            "offset": 28,
             "direction": "horizontal",
             "gradientLength": 180
           }

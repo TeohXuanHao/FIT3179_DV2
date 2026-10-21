@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Histogram - Townsville library program sessions in 2025 by number of people attending",
   "width": "container",
-  "height": 470,
+  "height": 525,
   "data": {
     "url": "data/events_townsville_2025.csv",
     "format": {"type": "csv", "parse": {"attendance": "number"}}
@@ -15,7 +15,7 @@
     {
       "mark": {
         "type": "bar",
-        "fill": "#2b8b8c",
+        "fill": "#00979b",
         "binSpacing": 2,
         "cornerRadiusEnd": 3
       },
@@ -60,8 +60,8 @@
             "sessions": 300,
             "note": [
               "36 sessions drew 100 or more.",
-              "The largest are from a festival day",
-              "in August, drew 5,041"
+              "The largest, a festival day",
+              "in August, drew 5,041 people"
             ]
           }
         ]

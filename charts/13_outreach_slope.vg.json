@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Slope chart - where Townsville library programs were held in 2025, as a share of sessions and as a share of attendance",
   "width": "container",
-  "height": 360,
+  "height": 380,
   "data": {
     "url": "data/events_townsville_2025.csv",
     "format": {"type": "csv", "parse": {"attendance": "number"}}
@@ -63,7 +63,7 @@
       "type": "nominal",
       "scale": {
         "domain": ["Inside a library", "In a park", "Schools and other places"],
-        "range": ["#2a78d6", "#008300", "#eda100"]
+        "range": ["#00979b", "#008300", "#c4cdca"]
       },
       "legend": null
     }

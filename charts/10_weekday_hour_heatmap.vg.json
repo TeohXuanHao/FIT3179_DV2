@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Heatmap - Brisbane City Council events in 2025 by day of the week and its start time",
   "width": "container",
-  "height": 250,
+  "height": 210,
   "data": {
     "url": "data/events_brisbane_2025.csv",
     "format": {"type": "csv", "parse": {"hour": "number"}}
@@ -43,7 +43,7 @@
         "color": {
           "field": "events",
           "type": "quantitative",
-          "scale": {"scheme": "teals", "domain": [0, 1500]},
+          "scale": {"domain": [0, 1500], "range": ["#8cc4bd", "#0b4f55"], "interpolate": "hcl"},
           "legend": {
             "title": "Events in the year",
             "orient": "bottom",

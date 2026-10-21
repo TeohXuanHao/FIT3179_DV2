@@ -2,18 +2,18 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Streamgraph - Brisbane City Council events in each month of 2025 by the type of event",
   "width": "container",
-  "height": 340,
+  "height": 349,
   "data": {
     "url": "data/events_brisbane_2025.csv",
     "format": {"type": "csv", "parse": {"date": "date:'%Y-%m-%d'"}}
   },
   "transform": [
     {
-      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'Arts', 'Travel & Outdoor', 'Environment'], datum.category_group) >= 0 ? datum.category_group : 'All other kinds'",
+      "calculate": "indexof(['Sports & Fitness', 'Family & Education'], datum.category_group) >= 0 ? datum.category_group : 'All other kinds'",
       "as": "kind"
     },
     {
-      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'Arts', 'Travel & Outdoor', 'Environment', 'All other kinds'], datum.kind)",
+      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'All other kinds'], datum.kind)",
       "as": "position"
     }
   ],
@@ -39,19 +39,9 @@
         "domain": [
           "Sports & Fitness",
           "Family & Education",
-          "Arts",
-          "Travel & Outdoor",
-          "Environment",
           "All other kinds"
         ],
-        "range": [
-          "#2a78d6",
-          "#eb6834",
-          "#1baf7a",
-          "#eda100",
-          "#e87ba4",
-          "#8c9895"
-        ]
+        "range": ["#eb6834", "#2b4c7e", "#c4cdca"]
       },
       "legend": {
         "title": null,
@@ -83,14 +73,45 @@
       }
     },
     {
+      "transform": [
+        {"timeUnit": "month", "field": "date", "as": "m"},
+        {
+          "aggregate": [{"op": "count", "as": "events"}],
+          "groupby": ["m", "kind", "position"]
+        },
+        {
+          "joinaggregate": [{"op": "sum", "field": "events", "as": "total"}],
+          "groupby": ["m"]
+        },
+        {"joinaggregate": [{"op": "max", "field": "total", "as": "busiest"}]},
+        {"filter": "month(datum.m) == 2"},
+        {
+          "window": [{"op": "sum", "field": "events", "as": "below"}],
+          "sort": [{"field": "position", "order": "ascending"}],
+          "frame": [null, 0]
+        },
+        {"calculate": "(datum.busiest - datum.total) / 2 + datum.below - datum.events / 2", "as": "mid"}
+      ],
+      "mark": {"type": "text", "fontWeight": 600, "fontSize": 12},
+      "encoding": {
+        "x": {"field": "m", "timeUnit": "month", "type": "temporal"},
+        "y": {"field": "mid", "type": "quantitative", "aggregate": "min", "stack": null},
+        "text": {"field": "kind"},
+        "color": {
+          "condition": {"test": "datum.kind == 'All other kinds'", "value": "#10292e"},
+          "value": "#ffffff"
+        }
+      }
+    },
+    {
       "data": {
         "values": [
           {
             "date": "2025-06-01",
             "reach": 54,
             "note": [
-              "Sport and fitness dips in June: 442 events,",
-              "down from 1,157 in May ↓"
+              "Sport and fitness dips in June:",
+              "442 events, down from 1,157 in May ↓"
             ]
           },
           {

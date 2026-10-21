@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Proportional symbol map - attendances at council library programs by state and territory from 2023 to 2024",
   "width": "container",
-  "height": 400,
+  "height": 447,
   "projection": {
     "type": "conicEqualArea",
     "parallels": [-18, -36],
@@ -88,7 +88,7 @@
             "color": {
               "field": "attendance_per_1000",
               "type": "quantitative",
-              "scale": {"scheme": "teals", "domain": [100, 400]},
+              "scale": {"domain": [100, 400], "range": ["#8cc4bd", "#0b4f55"], "interpolate": "hcl"},
               "legend": {
                 "title": "Attendances per 1,000 residents",
                 "orient": "top",

@@ -55,7 +55,7 @@
               "type": "nominal",
               "scale": {
                 "domain": ["Winter (June to August)", "Rest of the year"],
-                "range": ["#0e5a5f", "#7fbdb9"]
+                "range": ["#0b4f55", "#8cc4bd"]
               },
               "legend": {"title": null, "orient": "top", "symbolType": "square"}
             },

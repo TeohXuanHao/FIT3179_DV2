@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Treemap - Brisbane City Council events in 2025 based on the intended audience for each event",
   "autosize": {"type": "fit-x", "contains": "padding"},
-  "height": 430,
+  "height": 392,
   "signals": [
     {
       "name": "width",
@@ -93,26 +93,21 @@
       ],
       "range": [
         "#eda100",
-        "#e34948",
+        "#c2338f",
         "#2a78d6",
         "#4a3aa7",
         "#1baf7a",
-        "#8c9895"
+        "#c4cdca"
       ]
+    },
+    {
+      "name": "ink",
+      "type": "ordinal",
+      "domain": ["Early childhood", "Children", "Adults", "Seniors", "All ages", "Not stated"],
+      "range": ["#10292e", "#ffffff", "#ffffff", "#ffffff", "#10292e", "#10292e"]
     }
   ],
   "marks": [
-    {
-      "type": "text",
-      "encode": {
-        "enter": {
-          "x": {"value": 0},
-          "y": {"value": 15},
-          "fontStyle": {"value": "italic"},
-          "fill": {"value": "#47595c"}
-        }
-      }
-    },
     {
       "type": "rect",
       "from": {"data": "leaves"},
@@ -128,9 +123,9 @@
           "y": {"field": "y0"},
           "x2": {"field": "x1"},
           "y2": {"field": "y1"},
-          "fillOpacity": {"value": 0.5}
+          "fillOpacity": {"value": 1}
         },
-        "hover": {"fillOpacity": {"value": 0.7}}
+        "hover": {"fillOpacity": {"value": 0.85}}
       }
     },
     {
@@ -161,6 +156,7 @@
           "text": {
             "signal": "datum.x1 - datum.x0 > 80 && datum.y1 - datum.y0 > 40 ? [datum.category_group, format(datum.events, ',')] : ''"
           },
+          "fill": {"scale": "ink", "field": "audience"},
           "lineHeight": {"value": 15},
           "limit": {"signal": "datum.x1 - datum.x0 - 12"}
         }

@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Dot map - every place where Brisbane City Council held an event in 2025, coloured by type of venue",
   "width": "container",
-  "height": 470,
+  "height": 400,
   "params": [
     {
       "name": "audience",
@@ -62,8 +62,9 @@
         "clip": true,
         "size": 46,
         "opacity": 0.9,
-        "stroke": "#f4f7f5",
-        "strokeWidth": 0.8
+        "stroke": "#10292e",
+        "strokeOpacity": 0.55,
+        "strokeWidth": 0.7
       },
       "encoding": {
         "longitude": {"field": "longitude", "type": "quantitative"},
@@ -79,7 +80,7 @@
               "Swimming pool",
               "Other or not stated"
             ],
-            "range": ["#2a78d6", "#008300", "#eda100", "#4a3aa7", "#8c9895"]
+            "range": ["#00979b", "#008300", "#eda100", "#4a3aa7", "#c4cdca"]
           },
           "legend": {
             "title": "Each dot is one venue",

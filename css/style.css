@@ -7,7 +7,7 @@
   --teal: #0e5a5f;
   --teal-deep: #0b4349;
   --wattle: #f4b73b;
-  --display: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
   --text: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -64,16 +64,16 @@ select:focus-visible {
 .hero {
   background: var(--teal-deep);
   color: #ffffff;
-  padding: 88px 0 64px;
+  padding: 48px 0 36px;
 }
 
 .hero h1 {
   font-family: var(--display);
-  font-size: clamp(3rem, 8.4vw, 6.75rem);
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
   font-weight: 800;
-  line-height: 0.94;
-  letter-spacing: -0.03em;
-  max-width: 11ch;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  max-width: 21ch;
 }
 
 .hero-sub {
@@ -84,83 +84,17 @@ select:focus-visible {
   color: var(--wattle);
 }
 
-.standfirst {
-  margin-top: 20px;
-  max-width: 58ch;
-  font-size: 1.2rem;
-  line-height: 1.55;
-  color: #dbe7e4;
-}
-
-.figures {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px;
-  margin-top: 64px;
-  padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-.figures dt {
-  font-family: var(--display);
-  font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.figures dd {
-  margin-top: 12px;
-  max-width: 30ch;
-  font-size: 0.95rem;
-  line-height: 1.45;
-  color: #c5d6d2;
-}
-
-/* Guide to the three parts */
-
-.guide {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px;
-  padding: 40px 0 0;
-  list-style: none;
-  counter-reset: part;
-}
-
-.guide li {
-  counter-increment: part;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-.guide strong {
-  display: block;
-  margin-bottom: 4px;
-  font-family: var(--display);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.guide strong::before {
-  content: counter(part) ". ";
-  color: var(--teal);
-}
-
 /* Parts */
 
 .part {
-  margin-top: 48px;
-  padding-top: 16px;
+  margin-top: 40px;
 }
 
 .part-head {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: 40px;
-  margin-bottom: 24px;
+  column-gap: 32px;
+  margin-bottom: 56px;
 }
 
 .part-head > :first-child {
@@ -171,27 +105,18 @@ select:focus-visible {
   grid-column: span 8;
 }
 
-.part-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--teal);
-}
-
 .part h2 {
   font-family: var(--display);
   font-size: clamp(2.5rem, 5vw, 3.75rem);
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.015em;
 }
 
-.closing h2 {
-  font-size: clamp(2rem, 3.6vw, 2.75rem);
-  line-height: 1.05;
-}
-
+/* Body text is set in short columns so no line runs past about seven words */
 .part-lead p {
-  max-width: 64ch;
+  column-count: 2;
+  column-gap: 28px;
   font-size: 1.12rem;
 }
 
@@ -199,27 +124,17 @@ select:focus-visible {
   margin-top: 16px;
 }
 
-.sub-head {
-  display: inline-block;
-  margin: 24px 0 32px;
-  padding: 4px 12px;
-  background: var(--wattle);
-  font-family: var(--display);
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.row + .sub-head {
-  margin-top: 72px;
-}
-
 /* Figures */
 
 .row {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 64px 40px;
+  gap: 48px 32px;
   align-items: start;
+}
+
+.row + .row {
+  margin-top: 48px;
 }
 
 .span-5 {
@@ -238,55 +153,109 @@ select:focus-visible {
   grid-column: span 12;
 }
 
+/* Figures that share a row share three tracks (title, chart, text),
+   so titles, charts and text line up across the row */
 .fig {
   min-width: 0;
-}
-
-.tactic {
-  margin-bottom: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--teal);
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  row-gap: 0;
+  align-content: start;
 }
 
 .fig-title {
-  max-width: 34ch;
   font-family: var(--display);
   font-size: 1.45rem;
   font-weight: 700;
   line-height: 1.18;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .fig-sub {
-  max-width: 68ch;
-  margin-top: 10px;
+  column-count: 2;
+  column-gap: 28px;
+  margin-top: 16px;
   font-size: 0.95rem;
   line-height: 1.5;
   color: var(--ink-soft);
 }
 
+/* Full-width charts: title and text in a side column beside the chart */
+.fig.span-12 {
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  column-gap: 32px;
+}
+
+.fig.span-12 > .fig-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.fig.span-12 > .fig-sub {
+  grid-column: 1;
+  grid-row: 2;
+  column-count: 1;
+}
+
+.fig.span-12 > .fig-body {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  margin-top: 0;
+}
+
+.fig-body {
+  min-width: 0;
+  margin-top: 16px;
+}
+
+/* Size legend for the beeswarm, kept in the side column */
+.fig.span-12 > .size-key {
+  grid-column: 1;
+  grid-row: 3;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.size-key ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.size-key li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.size-key span {
+  display: inline-block;
+  border-radius: 50%;
+  background: #00979b;
+  opacity: 0.8;
+}
+
 .chart {
   width: 100%;
-  margin-top: 20px;
+}
+
+.control + .chart {
+  margin-top: 12px;
 }
 
 .chart.vega-embed {
   display: block;
 }
 
-.chart + .fig-sub {
+.fig-body + .fig-sub {
   margin-top: 16px;
-}
-
-.fig figcaption {
-  max-width: 78ch;
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--muted);
 }
 
 .control {
@@ -357,13 +326,13 @@ select:focus-visible {
   width: 12px;
   height: 12px;
   border-radius: 3px;
-  background: linear-gradient(90deg, #cfe6e2 0 20%, #93cbc6 20% 40%, #52aaa6 40% 60%, #1f8283 60% 80%, #0b4f55 80%);
+  background: linear-gradient(90deg, #8cc4bd 0 20%, #62aca6 20% 40%, #3a938f 40% 60%, #1a7375 60% 80%, #0b4f55 80%);
 }
 
-.control label:has(input[value="Under 150"])::before { background: #cfe6e2; }
-.control label:has(input[value="150 to 250"])::before { background: #93cbc6; }
-.control label:has(input[value="250 to 350"])::before { background: #52aaa6; }
-.control label:has(input[value="350 to 500"])::before { background: #1f8283; }
+.control label:has(input[value="Under 150"])::before { background: #8cc4bd; }
+.control label:has(input[value="150 to 250"])::before { background: #62aca6; }
+.control label:has(input[value="250 to 350"])::before { background: #3a938f; }
+.control label:has(input[value="350 to 500"])::before { background: #1a7375; }
 .control label:has(input[value="500 or more"])::before { background: #0b4f55; }
 
 #vg-tooltip-element.vg-tooltip {
@@ -379,29 +348,9 @@ select:focus-visible {
   color: var(--ink-soft);
 }
 
-/* Closing */
-
-.takeaways {
-  display: grid;
-  gap: 20px;
-  padding-left: 1.2em;
-  font-size: 1.08rem;
-}
-
-.takeaways li {
-  max-width: 64ch;
-  padding-left: 6px;
-}
-
-.takeaways li::marker {
-  font-family: var(--display);
-  font-weight: 700;
-  color: var(--teal);
-}
-
 .page-foot {
-  margin-top: 96px;
-  padding: 64px 0 72px;
+  margin-top: 64px;
+  padding: 32px 0 36px;
   background: #e7edea;
   font-size: 0.9rem;
   line-height: 1.55;
@@ -411,11 +360,15 @@ select:focus-visible {
 .foot-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 48px 40px;
+  gap: 24px 40px;
 }
 
 .foot-grid section {
-  grid-column: span 6;
+  grid-column: span 4;
+}
+
+.foot-grid p + p {
+  margin-top: 8px;
 }
 
 .foot-grid .credits {
@@ -452,14 +405,31 @@ select:focus-visible {
     padding: 0 20px;
   }
 
-  .hero {
-    padding: 56px 0 40px;
+  .fig.span-12 {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
   }
 
-  .figures,
-  .guide {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+  .fig.span-12 > .fig-title,
+  .fig.span-12 > .fig-sub,
+  .fig.span-12 > .size-key,
+  .fig.span-12 > .fig-body {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .fig.span-12 > .fig-body {
+    margin-top: 12px;
+  }
+
+  .part-lead p,
+  .fig .fig-sub {
+    column-count: 1;
+    max-width: 36ch;
+  }
+
+  .hero {
+    padding: 36px 0 28px;
   }
 
   .part-head,
