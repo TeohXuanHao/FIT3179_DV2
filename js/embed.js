@@ -1,5 +1,3 @@
-// Several charts use the same data file, so each file is downloaded once
-// and the result is shared between them.
 const baseLoader = vega.loader();
 const loads = new Map();
 const loader = Object.create(baseLoader);
@@ -9,6 +7,7 @@ loader.load = (uri, opt) => {
   return loads.get(key);
 };
 
+// having the style be consistent
 const options = {
   actions: false,
   renderer: "svg",
