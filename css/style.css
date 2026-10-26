@@ -84,44 +84,43 @@ select:focus-visible {
   color: var(--wattle);
 }
 
+/* One short paragraph per third of the grid, so each column starts at the
+   top and no line runs past about seven words */
+.hero-intro {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 32px;
+  margin-top: 28px;
+  font-size: 1.12rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
 /* Parts */
 
 .part {
   margin-top: 40px;
 }
 
+/* Heading on one line, lead text below it as three short paragraphs, one per
+   third of the figure grid, so no line runs past about seven words */
 .part-head {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: 32px;
-  margin-bottom: 56px;
-}
-
-.part-head > :first-child {
-  grid-column: span 4;
-}
-
-.part-head > :last-child {
-  grid-column: span 8;
+  margin-bottom: 40px;
 }
 
 .part h2 {
+  margin-bottom: 18px;
   font-family: var(--display);
   font-size: clamp(2.5rem, 5vw, 3.75rem);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.05;
   letter-spacing: -0.015em;
 }
 
-/* Body text is set in short columns so no line runs past about seven words */
-.part-lead p {
-  column-count: 2;
-  column-gap: 28px;
+.part-lead {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 32px;
   font-size: 1.12rem;
-}
-
-.part-lead p + p {
-  margin-top: 16px;
 }
 
 /* Figures */
@@ -135,6 +134,10 @@ select:focus-visible {
 
 .row + .row {
   margin-top: 48px;
+}
+
+.span-4 {
+  grid-column: span 4;
 }
 
 .span-5 {
@@ -348,6 +351,27 @@ select:focus-visible {
   color: var(--ink-soft);
 }
 
+/* Closing summary */
+
+.takeaway {
+  padding-top: 16px;
+  border-top: 3px solid var(--wattle);
+}
+
+.takeaway h3 {
+  font-family: var(--display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.takeaway p {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
 .page-foot {
   margin-top: 64px;
   padding: 32px 0 36px;
@@ -371,9 +395,10 @@ select:focus-visible {
   margin-top: 8px;
 }
 
+/* Author and AI credit, under the notes in the last footer column */
 .foot-grid .credits {
-  grid-column: span 12;
-  padding-top: 24px;
+  margin-top: 20px;
+  padding-top: 16px;
   border-top: 1px solid #c9d4d0;
 }
 
@@ -390,6 +415,32 @@ select:focus-visible {
   display: grid;
   gap: 10px;
   padding-left: 1.2em;
+}
+
+/* APA reference list: alphabetical, hanging indent, long URLs may break.
+   It takes two footer columns and flows across them. */
+.foot-grid .refs-block {
+  grid-column: span 8;
+}
+
+.page-foot .refs {
+  display: block;
+  column-count: 2;
+  column-gap: 40px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.refs li {
+  break-inside: avoid;
+  margin-bottom: 10px;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+  overflow-wrap: anywhere;
+}
+
+.refs cite {
+  font-style: italic;
 }
 
 .credits p {
@@ -422,7 +473,13 @@ select:focus-visible {
     margin-top: 12px;
   }
 
-  .part-lead p,
+  .hero-intro,
+  .part-lead {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+    max-width: 36ch;
+  }
+
   .fig .fig-sub {
     column-count: 1;
     max-width: 36ch;
@@ -432,28 +489,26 @@ select:focus-visible {
     padding: 36px 0 28px;
   }
 
-  .part-head,
   .row,
   .foot-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .part-head > :first-child,
-  .part-head > :last-child,
+  .span-4,
   .span-5,
   .span-6,
   .span-7,
   .span-12,
+  .page-foot .refs {
+    column-count: 1;
+  }
+
   .foot-grid section,
-  .foot-grid .credits {
+  .foot-grid .refs-block {
     grid-column: auto;
   }
 
   .chart {
     overflow-x: auto;
-  }
-
-  .part-head > :first-child {
-    margin-bottom: 20px;
   }
 }

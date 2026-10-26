@@ -19,7 +19,7 @@
       "as": "kind"
     },
     {
-      "calculate": "datum.kind == 'Outreach' ? 'Community outreach' : datum.kind",
+      "calculate": "datum.kind == 'Outreach' ? 'Pop-ups in parks and schools' : datum.kind",
       "as": "kind"
     },
     {
@@ -98,15 +98,15 @@
           {
             "position": 110,
             "note": [
-              "Expos and outreach sessions in parks,",
-              "schools and playgroups draw the most attendance"
+              "Expos and pop-ups in parks, schools",
+              "and playgroups draw the biggest crowds"
             ]
           },
           {
             "position": 400,
             "note": [
-              "The information session averaged",
-              "fewer than 4 people"
+              "Information sessions, the most common kind,",
+              "drew only a handful of people"
             ]
           }
         ]

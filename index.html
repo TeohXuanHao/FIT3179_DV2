@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>How do Australian councils promote community participation?</title>
+  <title>How do councils get Australians taking part?</title>
   <meta name="description" content="A data story about the events Australian local councils run: where they happen, what they are, who comes, and how councils encourage people to take part.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,12 @@
 <header class="hero">
   <div class="wrap">
     <h1>How do councils get Australians taking part?</h1>
-    <p class="hero-sub">A year of council events across Australia</p>
+    <p class="hero-sub">Council events across Australia</p>
+    <div class="hero-intro">
+      <p>Councils host small local events, such as reading sessions for children, craft classes and workshops, where neighbours meet and get to know each other.</p>
+      <p>Australian councils run thousands of them every year. But which events do people actually take part in, and who is left out?</p>
+      <p>This visualisation follows the data in three steps: where people take part, who events serve and when they run, and how councils bring more people in.</p>
+    </div>
   </div>
 </header>
 
@@ -28,34 +33,36 @@
   <section class="part">
     <header class="part-head">
       <div>
-        <h2>Explore</h2>
+        <h2>Where are events hosted?</h2>
       </div>
       <div class="part-lead">
-        <p>How often do Australians take part, and where? Library programs are one of the few council activities with public attendance figures, so they let us compare whole states, single councils and a full year of events in Brisbane.</p>
+        <p>How often do Australians take part, and where? Libraries are one of the few council services that count who comes.</p>
+        <p>This lets us compare whole states and single councils, from big cities to small outback towns.</p>
+        <p>Attendance counts each visit, so a parent who comes every week is counted many times.</p>
       </div>
     </header>
 
     <div class="row">
       <figure class="fig span-5">
-        <h3 class="fig-title">South Australia has the highest attendance rate</h3>
+        <h3 class="fig-title">Library Attendance by State</h3>
         <div class="fig-body">
           <div class="chart" data-chart="1_states_symbol_map"></div>
         </div>
-        <p class="fig-sub">Where you live changes how often your council invites you in. South Australians go to library programs almost twice as often as people in New South Wales. The most populous state sits near the bottom, so size is not the advantage: how councils run their programs matters more than how many people they serve.</p>
+        <p class="fig-sub">South Australians go to library programs almost twice as often as New South Wales residents. South Australia runs 34 sessions per 1,000 residents, double any other state. Its sessions are small but plentiful.</p>
       </figure>
 
       <figure class="fig span-7">
-        <h3 class="fig-title">Remote Queensland councils have the highest rates</h3>
+        <h3 class="fig-title">Attendance Rate by Council</h3>
         <div class="fig-body">
           <div class="control" id="zoom-control"></div>
           <div class="chart" data-chart="2_council_choropleth"></div>
         </div>
-        <p class="fig-sub">Zoom in and the pattern sharpens. The darkest councils are not the cities but small outback towns like Winton, with nearly five attendances for every resident. In a town that small, the library is likely one of the few places where people regularly come together.</p>
+        <p class="fig-sub">The councils that draw the most people are small outback towns, not cities. The typical Queensland council sees 335 attendances for every 1,000 residents, compared with 256 in New South Wales. A town of a thousand people has few other places to meet. Its library becomes a hub of community life.</p>
       </figure>
 
       <figure class="fig span-12">
-        <h3 class="fig-title">Brisbane held events every day of 2025</h3>
-        <p class="fig-sub">So do people miss out because there is too little on? Brisbane suggests not. Its council ran events every day of 2025, about 78 a day, pausing only over Christmas. If the supply is there, the real questions are who these events are for and when they run.</p>
+        <h3 class="fig-title">Daily Events in Brisbane</h3>
+        <p class="fig-sub">People do not miss out because there is nothing on. Brisbane's council ran events on almost every day of 2025. Weekdays averaged 88 events, but weekends only 51, so the days most workers are free get the least. January was the quietest month as the summer holidays emptied the program. With this much on offer, the real questions are who events are for and when they run.</p>
         <div class="fig-body">
           <div class="chart" data-chart="3_calendar_heatmap"></div>
         </div>
@@ -66,41 +73,43 @@
   <section class="part">
     <header class="part-head">
       <div>
-        <h2>Compare</h2>
+        <h2>Who is the target audience?</h2>
       </div>
       <div class="part-lead">
-        <p>Councils run plenty of events. The real differences are in who they are for, which sessions draw a crowd, and when they run.</p>
+        <p>Councils run plenty of events. The real differences are in who they are for, and who ends up missing out.</p>
+        <p>Two cities help answer this. Brisbane publishes every event it runs, but not how many people came to each.</p>
+        <p>Townsville counts the people at each library session. So Brisbane shows what is on offer, and Townsville who turns up.</p>
       </div>
     </header>
 
     <div class="row">
       <figure class="fig span-7">
-        <h3 class="fig-title">Seniors and under-fives get 40% of events</h3>
+        <h3 class="fig-title">Brisbane Events by Audience</h3>
         <div class="fig-body">
           <div class="chart" data-chart="4_audience_treemap"></div>
         </div>
-        <p class="fig-sub">Brisbane's program leans towards people who are free during the day. Seniors and under-fives together get two in every five events. School-age children get fewer than one in ten, and teenagers almost none.</p>
+        <p class="fig-sub">Brisbane's events mostly serve people who are free during the day. Seniors and children under five get two in every five events, but they get very different things. Nine in ten events for seniors are sport and fitness sessions. Most events for under-fives are family and education activities. Teenagers get just 180 events in a whole year.</p>
       </figure>
 
       <figure class="fig span-5">
-        <h3 class="fig-title">Under-fives lead library attendance</h3>
+        <h3 class="fig-title">Library Attendance by Age Group</h3>
         <div class="fig-body">
           <div class="chart" data-chart="5_library_age_groups"></div>
         </div>
-        <p class="fig-sub">Libraries in all three states tell the same story. Storytime and rhyme time, such as Queensland's First 5 Forever program, are their biggest draw. The residents libraries reach best are the youngest, with a parent beside them.</p>
+        <p class="fig-sub">The pattern holds in all three states. In New South Wales and Victoria, a session for under-fives draws 26 to 34 people. A session for adults draws only 8 to 11. Libraries run plenty of adult programs, but families with young children are the ones who fill the room.</p>
       </figure>
     </div>
 
     <div class="row">
       <figure class="fig span-12">
-        <h3 class="fig-title">The typical council draws 290 per 1,000</h3>
-        <p class="fig-sub">Lining up every council confirms what the map showed. Half sit between 210 and 415, and the big cities sit in the middle or below: Sydney at 111, Brisbane at 225. The far right belongs to small towns, where a library program is a community event.</p>
+        <h3 class="fig-title">Council Attendance Rates by State</h3>
+        <p class="fig-sub">A bigger council does not mean more people taking part. Councils with under 15,000 residents run about 30 sessions for every 1,000 people. Councils with over 150,000 residents run fewer than 10. Small towns simply offer more chances to join in per resident. In a big city, a library program also competes with many other things to do.</p>
         <div class="size-key">
-          <p>Circle size: residents</p>
+          <p>Council population</p>
           <ul>
             <li><span style="width: 7.7px; height: 7.7px"></span>50,000</li>
             <li><span style="width: 19.3px; height: 19.3px"></span>500,000</li>
-            <li><span style="width: 30.5px; height: 30.5px"></span>1.3 million</li>
+            <li><span style="width: 26.9px; height: 26.9px"></span>1 million</li>
           </ul>
         </div>
         <div class="fig-body">
@@ -109,42 +118,42 @@
       </figure>
 
       <figure class="fig span-7">
-        <h3 class="fig-title">Outreach sessions draw the biggest crowds</h3>
+        <h3 class="fig-title">Average Crowd by Session Type</h3>
         <div class="fig-body">
           <div class="chart" data-chart="15_session_kind_lollipop"></div>
         </div>
-        <p class="fig-sub">Which sessions draw a crowd? The ones that leave the building. Expos averaged 191 people and community outreach about 100, while information sessions, the most common kind, averaged fewer than four.</p>
+        <p class="fig-sub">Townsville's biggest crowds come from sessions held outside the library. First 5 Forever, the program for under-fives, stands out. It ran under a third of all sessions, yet it drew more than half of all the people who came. Its sessions averaged 47 people, compared with just 19 for every other program.</p>
       </figure>
 
       <figure class="fig span-5">
-        <h3 class="fig-title">Nearly half of sessions drew under 10</h3>
+        <h3 class="fig-title">Townsville Session Sizes</h3>
         <div class="fig-body">
           <div class="chart" data-chart="7_session_size_histogram"></div>
         </div>
-        <p class="fig-sub">Most sessions are small: half had 11 people or fewer. Yet the 36 sessions that drew 100 or more brought in 40% of everyone who came. Councils rely on both: small groups that keep regulars coming, and big moments that reach everyone else.</p>
+        <p class="fig-sub">Small sessions are not a failure. Most are information sessions, workshops and homework help. The few sessions of 100 or more brought in 40% of everyone. Most big sessions were held out in the community.</p>
       </figure>
     </div>
 
     <div class="row">
       <figure class="fig span-7">
-        <h3 class="fig-title">Sport and fitness events rise and fall</h3>
+        <h3 class="fig-title">Monthly Events by Type</h3>
         <div class="fig-body">
           <div class="chart" data-chart="8_monthly_streamgraph"></div>
         </div>
-        <p class="fig-sub">Timing matters too. Sport and fitness events swing with the seasons, falling by more than half from May to June. Family and education events hold steady all year, so learning programs, not sport, are the backbone residents can count on.</p>
+        <p class="fig-sub">Sport and fitness events change the most through the year. They are lowest in January, when summer heat and holidays empty the program, and fall again as winter starts. Family and education events barely change. Residents can count on learning programs in any month, while exercise classes come and go with the seasons.</p>
       </figure>
 
       <figure class="fig span-5">
-        <h3 class="fig-title">Townsville attendance peaks in winter</h3>
+        <h3 class="fig-title">Peak Attendance by Month</h3>
         <div class="fig-body">
           <div class="chart" data-chart="9_attendance_year_wheel"></div>
         </div>
-        <p class="fig-sub">Townsville shows how far one event can move a year. Attendance climbs through winter, but August's peak rests largely on a single festival day of 5,041 people, about four times as many as came in the whole of December.</p>
+        <p class="fig-sub">Winter is the dry season in Townsville. Its mild weather suits big park events. The wet summer is quietest. Without its one festival day, August would fall behind July. The rest of the rise comes from outdoor sessions.</p>
       </figure>
 
       <figure class="fig span-12">
-        <h3 class="fig-title">Brisbane events cluster on weekday mornings</h3>
-        <p class="fig-sub">And when do events run? Mostly at 9 or 10 on a weekday morning, with only 18% on weekends. That suits the seniors and parents of young children seen earlier, but it leaves out anyone who works or studies during the day, which helps explain why school-age children and teenagers are so rarely served.</p>
+        <h3 class="fig-title">Event Start Times</h3>
+        <p class="fig-sub">Most Brisbane events start at 9 or 10 on a weekday morning. Just 6% start after 5 pm, when most working adults are free. Most events for under-fives and seniors run on weekday mornings. Events for teenagers are timed better, with most starting after school, but there are only 180 of them all year. The timetable leaves out anyone who works or studies during the day.</p>
         <div class="fig-body">
           <div class="chart" data-chart="10_weekday_hour_heatmap"></div>
         </div>
@@ -155,71 +164,96 @@
   <section class="part">
     <header class="part-head">
       <div>
-        <h2>Investigate</h2>
+        <h2>What works</h2>
       </div>
       <div class="part-lead">
-        <p>So what do councils do to make taking part easier, and does it work? The last chart asks a different question: do residents feel heard?</p>
+        <p>So what do councils do to make taking part easier for residents, and does any of it actually work?</p>
+        <p>The first three charts look at cost, distance and taking sessions out to where people already are.</p>
+        <p>The last chart asks a different question: beyond turning up, do residents feel their council listens?</p>
       </div>
     </header>
 
     <div class="row">
       <figure class="fig span-6">
-        <h3 class="fig-title">Nearly 8 in 10 events are free</h3>
+        <h3 class="fig-title">Free and Walk-in Events</h3>
         <div class="fig-body">
           <div class="chart" data-chart="11_free_waffle"></div>
         </div>
-        <p class="fig-sub">Councils do remove the first barriers. Nearly eight in ten Brisbane events are free, and about half are both free and walk-in, so there is no cost and nothing to plan before turning up.</p>
+        <p class="fig-sub">Cost is not the same for everyone. Almost every event for under-fives is free, and most need no booking. Only about half of the events for seniors are free, because many are paid exercise classes. Seniors are the group most likely to have to pay to take part.</p>
       </figure>
 
       <figure class="fig span-6">
-        <h3 class="fig-title">Libraries and parks host most events</h3>
+        <h3 class="fig-title">Brisbane Event Venues</h3>
         <div class="fig-body">
           <div class="control" id="audience-control"></div>
           <div class="chart" data-chart="12_venue_dot_map"></div>
         </div>
-        <p class="fig-sub">They also bring events close to home. Libraries and parks host seven in ten events, and two in five venues are more than 10 km from the city centre, spreading events across the suburbs instead of drawing everyone into town.</p>
+        <p class="fig-sub">Libraries are the busiest venues by far. Each library hosted about 250 events in the year, compared with fewer than 40 for each park. Three in four events for under-fives are held in a library. Two in five venues are over 10 km from the city centre.</p>
       </figure>
 
       <figure class="fig span-6">
-        <h3 class="fig-title">Few park sessions, but large crowds</h3>
+        <h3 class="fig-title">Sessions and Crowds by Place</h3>
         <div class="fig-body">
           <div class="chart" data-chart="13_outreach_slope"></div>
         </div>
-        <p class="fig-sub">Going out works. Park sessions were just 2% of Townsville's library sessions but drew 17% of the people. Meeting families where they already are reaches far more of them than waiting inside.</p>
+        <p class="fig-sub">Taking the library outdoors pays off. A session in a park drew about 237 people on average, ten times the 23 at a session inside a library. Parks reach families who might never plan a trip to the library. A handful of outdoor sessions can reach as many people as hundreds held indoors.</p>
       </figure>
 
       <figure class="fig span-6">
-        <h3 class="fig-title">Consultation ratings: city up, country down</h3>
+        <h3 class="fig-title">Consultation Satisfaction by Council Type</h3>
         <div class="fig-body">
           <div class="chart" data-chart="14_consultation_dumbbell"></div>
         </div>
-        <p class="fig-sub">Taking part is also about being heard. Melbourne residents now rate their council's consultation higher than four years earlier, but in regional cities and country shires ratings fell by about five points. Country towns turn out for their libraries, yet in Victoria country residents feel less heard than before.</p>
+        <p class="fig-sub">Taking part is also about having a say. Victoria asks residents how well their council listens. Melbourne councils have pulled ahead while large country shires slipped. The gap between them has grown from 7 points to 17. Country towns use their libraries, yet feel less heard.</p>
       </figure>
+    </div>
+  </section>
+
+  <section class="part">
+    <header class="part-head">
+      <div>
+        <h2>So, how do councils do it?</h2>
+      </div>
+      <div class="part-lead">
+        <p>Councils get Australians taking part by making it easy: events that are free, close to home and need no booking.</p>
+        <p>They do best when they take events out of the library to where people already are, like parks and schools.</p>
+        <p>But the timetable still decides who is invited, and not everyone, especially in the country, feels heard.</p>
+      </div>
+    </header>
+
+    <div class="row">
+      <div class="takeaway span-4">
+        <h3>Lower the barriers</h3>
+        <p>Nearly eight in ten Brisbane events are free, about half are both free and walk-in, and libraries and parks across the suburbs host seven in ten of them.</p>
+      </div>
+      <div class="takeaway span-4">
+        <h3>Go to the people</h3>
+        <p>Expos and pop-up sessions held outside the library draw the biggest crowds. In Townsville, park sessions were 2% of library sessions but brought in 17% of the people.</p>
+      </div>
+      <div class="takeaway span-4">
+        <h3>Mind the gaps</h3>
+        <p>Most events run on weekday mornings, so school-age children, teenagers and working adults miss out, and country Victorians feel less heard than four years ago.</p>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="page-foot">
   <div class="wrap foot-grid">
-    <section>
-      <h2>Library statistics</h2>
-      <ul>
-        <li><a href="https://read.alia.org.au">Australian Public Libraries Statistical Report 2023–24</a>, National and State Libraries Australasia with ALIA. CC&nbsp;BY&nbsp;4.0.</li>
-        <li><a href="https://www.data.qld.gov.au/dataset/slq-qld-public-libraries-annual-statistics">Queensland public libraries annual statistics 2024–25</a>, State Library of Queensland. CC&nbsp;BY&nbsp;4.0.</li>
-        <li><a href="https://pls.sl.nsw.gov.au/managing-my-library/public-library-statistics">Public library statistics 2024–25</a>, State Library of New South Wales.</li>
-        <li><a href="https://www.plv.org.au/resources/">2024–25 Annual Statistical Survey</a>, Public Libraries Victoria. ©&nbsp;Public Libraries Victoria.</li>
-        <li>Directory of Public Library Services in Victoria 2026, Local Government Victoria. CC&nbsp;BY&nbsp;3.0&nbsp;AU.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Councils, events and maps</h2>
-      <ul>
-        <li><a href="https://discover.data.vic.gov.au/dataset/local-government-performance-reporting">Local Government Performance Reporting 2020–25</a>, Local Government Victoria. CC&nbsp;BY&nbsp;4.0.</li>
-        <li><a href="https://data.brisbane.qld.gov.au/explore/dataset/brisbane-city-council-events">Brisbane City Council events</a> and venue locations, Brisbane City Council. CC&nbsp;BY&nbsp;4.0.</li>
-        <li><a href="https://data.gov.au/data/dataset/townsville-city-council-library-programs">Townsville City Council library programs</a>, Townsville City Council. CC&nbsp;BY&nbsp;4.0.</li>
-        <li>Estimated resident population and council boundaries 2025 (ASGS Edition 3), Australian Bureau of Statistics. CC&nbsp;BY&nbsp;4.0.</li>
-        <li>About 300 Brisbane event locations from ©&nbsp;OpenStreetMap contributors, ODbL.</li>
+    <section class="refs-block">
+      <h2>References</h2>
+      <ul class="refs">
+        <li>Australian Bureau of Statistics. (2025). <cite>Australian Statistical Geography Standard (ASGS) Edition 3: Digital boundary files</cite> [Data set]. <a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files">https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files</a> (CC&nbsp;BY&nbsp;4.0)</li>
+        <li>Australian Bureau of Statistics. (2026). <cite>Regional population</cite> [Data set]. <a href="https://www.abs.gov.au/statistics/people/population/regional-population/latest-release">https://www.abs.gov.au/statistics/people/population/regional-population/latest-release</a> (CC&nbsp;BY&nbsp;4.0)</li>
+        <li>Brisbane City Council. (2026). <cite>Brisbane City Council events</cite> [Data set]. Retrieved October 10, 2026, from <a href="https://data.brisbane.qld.gov.au/explore/dataset/brisbane-city-council-events">https://data.brisbane.qld.gov.au/explore/dataset/brisbane-city-council-events</a> (CC&nbsp;BY&nbsp;4.0)</li>
+        <li>Local Government Victoria. (2025). <cite>Local government performance reporting 2020–25</cite> [Data set]. <a href="https://discover.data.vic.gov.au/dataset/local-government-performance-reporting">https://discover.data.vic.gov.au/dataset/local-government-performance-reporting</a> (CC&nbsp;BY&nbsp;4.0)</li>
+        <li>Local Government Victoria. (2026). <cite>Directory of public library services in Victoria</cite> [Data set]. <a href="https://discover.data.vic.gov.au/dataset/directory-of-public-library-services-in-victoria">https://discover.data.vic.gov.au/dataset/directory-of-public-library-services-in-victoria</a> (CC&nbsp;BY&nbsp;3.0&nbsp;AU)</li>
+        <li>National and State Libraries Australasia &amp; Australian Library and Information Association. (2025). <cite>Australian public libraries statistical report 2023–24</cite>. ALIA. <a href="https://read.alia.org.au">https://read.alia.org.au</a> (CC&nbsp;BY&nbsp;4.0)</li>
+        <li>OpenStreetMap contributors. (2026). <cite>OpenStreetMap</cite> [Data set]. OpenStreetMap Foundation. <a href="https://www.openstreetmap.org/copyright">https://www.openstreetmap.org/copyright</a> (ODbL)</li>
+        <li>Public Libraries Victoria. (2025). <cite>2024–25 annual statistical survey</cite> [Data set]. <a href="https://www.plv.org.au/resources/">https://www.plv.org.au/resources/</a></li>
+        <li>State Library of New South Wales. (2025). <cite>Public library statistics 2024–25</cite> [Data set]. <a href="https://pls.sl.nsw.gov.au/managing-my-library/public-library-statistics">https://pls.sl.nsw.gov.au/managing-my-library/public-library-statistics</a></li>
+        <li>State Library of Queensland. (2025). <cite>Queensland public libraries annual statistics 2024–25</cite> [Data set]. Queensland Government Open Data Portal. <a href="https://www.data.qld.gov.au/dataset/slq-qld-public-libraries-annual-statistics">https://www.data.qld.gov.au/dataset/slq-qld-public-libraries-annual-statistics</a> (CC&nbsp;BY&nbsp;4.0)</li>
+        <li>Townsville City Council. (2025). <cite>Townsville City Council library programs</cite> [Data set]. <a href="https://data.gov.au/data/dataset/townsville-city-council-library-programs">https://data.gov.au/data/dataset/townsville-city-council-library-programs</a> (CC&nbsp;BY&nbsp;4.0)</li>
       </ul>
     </section>
 
@@ -229,10 +263,11 @@
       <p>Council figures cover New South Wales, Victoria and Queensland. Other states do not publish them council by council.</p>
       <p>Brisbane's events have no attendance. Townsville's attendance covers library programs only.</p>
       <p>Brisbane's full year of events was read from the council's calendar feed on 10 October 2026.</p>
-    </section>
 
-    <section class="credits">
-      <p>By Teoh Xuan Hao, October 2026. Made with Vega and Vega-Lite.</p>
+      <div class="credits">
+        <p>By Teoh Xuan Hao, October 2026. Made with Vega and Vega-Lite.</p>
+        <p>Use of AI: Claude (Anthropic) was used to help write code and to check the grammar and style of the text. The choice of data, the chart designs and the story are my own.</p>
+      </div>
     </section>
   </div>
 </footer>
