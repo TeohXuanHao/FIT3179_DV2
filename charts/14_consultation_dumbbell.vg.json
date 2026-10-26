@@ -11,7 +11,7 @@
     {"filter": "datum.year == '2020-21' || datum.year == '2024-25'"},
     {"filter": "datum.engagement_satisfaction != null"},
     {
-      "calculate": "{'Metro': 'Melbourne metropolitan', 'Interface': 'Edge of Melbourne', 'Regional': 'Regional cities', 'Regional City': 'Regional cities', 'Large Shire': 'Large country shires', 'Small Shire': 'Small country shires'}[datum.council_group]",
+      "calculate": "{'Metro': 'Melbourne metropolitan', 'Interface': 'Edge of Melbourne', 'Regional': 'Regional cities', 'Regional City': 'Regional cities', 'Large Shire': 'Larger rural councils', 'Small Shire': 'Smaller rural councils'}[datum.council_group]",
       "as": "group"
     },
     {
@@ -29,9 +29,9 @@
       "sort": [
         "Melbourne metropolitan",
         "Edge of Melbourne",
-        "Small country shires",
+        "Smaller rural councils",
         "Regional cities",
-        "Large country shires"
+        "Larger rural councils"
       ],
       "axis": {
         "title": null,

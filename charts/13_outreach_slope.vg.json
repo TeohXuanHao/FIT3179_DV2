@@ -28,6 +28,10 @@
     },
     {"calculate": "datum.sessions / datum.all_sessions", "as": "Sessions held"},
     {"calculate": "datum.people / datum.all_people", "as": "People attending"},
+    {
+      "calculate": "datum['People attending'] > datum['Sessions held'] ? 'Draws more people than its share of sessions' : 'Draws fewer people than its share of sessions'",
+      "as": "trend"
+    },
     {"fold": ["Sessions held", "People attending"], "as": ["measure", "share"]},
     {
       "calculate": "datum.measure == 'Sessions held' ? format(datum.share, '.0%') + ' of sessions (' + format(datum.sessions, ',') + ')' : [datum.place, format(datum.share, '.0%') + ' of people (' + format(datum.people, ',') + ')']",
@@ -58,14 +62,24 @@
       "scale": {"domain": [0, 1]},
       "axis": null
     },
+    "detail": {"field": "place"},
     "color": {
-      "field": "place",
+      "field": "trend",
       "type": "nominal",
       "scale": {
-        "domain": ["Inside a library", "In a park", "Schools and other places"],
-        "range": ["#00979b", "#008300", "#c4cdca"]
+        "domain": [
+          "Draws more people than its share of sessions",
+          "Draws fewer people than its share of sessions"
+        ],
+        "range": ["#0b4f55", "#b4c2bf"]
       },
-      "legend": null
+      "legend": {
+        "title": null,
+        "orient": "bottom",
+        "direction": "vertical",
+        "symbolType": "stroke",
+        "symbolStrokeWidth": 3
+      }
     }
   },
   "layer": [

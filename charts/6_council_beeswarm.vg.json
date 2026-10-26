@@ -117,26 +117,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "text",
-      "encode": {
-        "update": {
-          "x": {"signal": "width"},
-          "y": {"scale": "y", "value": "Queensland", "offset": 4},
-          "text": {
-            "value": [
-              "Eight remote councils with",
-              "under 15,000 residents are",
-              "above 1,000. Winton: 4,800"
-            ]
-          },
-          "align": {"value": "right"},
-          "fontStyle": {"value": "italic"},
-          "fill": {"value": "#47595c"},
-          "lineHeight": {"value": 14}
-        }
-      }
     }
   ]
 }

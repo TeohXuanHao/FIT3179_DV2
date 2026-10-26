@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Streamgraph - Brisbane City Council events in each month of 2025 by the type of event",
+  "description": "Stacked area chart - Brisbane City Council events in each month of 2025 by the type of event",
   "width": "container",
   "height": 349,
   "data": {
@@ -9,11 +9,11 @@
   },
   "transform": [
     {
-      "calculate": "indexof(['Sports & Fitness', 'Family & Education'], datum.category_group) >= 0 ? datum.category_group : 'All other kinds'",
+      "calculate": "indexof(['Sports & Fitness', 'Family & Education'], datum.category_group) >= 0 ? datum.category_group : 'Others'",
       "as": "kind"
     },
     {
-      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'All other kinds'], datum.kind)",
+      "calculate": "indexof(['Sports & Fitness', 'Family & Education', 'Others'], datum.kind)",
       "as": "position"
     }
   ],
@@ -31,7 +31,17 @@
         "ticks": false
       }
     },
-    "y": {"aggregate": "count", "stack": "center", "axis": null},
+    "y": {
+      "aggregate": "count",
+      "stack": "zero",
+      "axis": {
+        "title": "Events in the month",
+        "format": ",.0f",
+        "tickCount": 5,
+        "domain": false,
+        "ticks": false
+      }
+    },
     "color": {
       "field": "kind",
       "type": "nominal",
@@ -39,7 +49,7 @@
         "domain": [
           "Sports & Fitness",
           "Family & Education",
-          "All other kinds"
+          "Others"
         ],
         "range": ["#eb6834", "#2b4c7e", "#c4cdca"]
       },
@@ -79,18 +89,13 @@
           "aggregate": [{"op": "count", "as": "events"}],
           "groupby": ["m", "kind", "position"]
         },
-        {
-          "joinaggregate": [{"op": "sum", "field": "events", "as": "total"}],
-          "groupby": ["m"]
-        },
-        {"joinaggregate": [{"op": "max", "field": "total", "as": "busiest"}]},
         {"filter": "month(datum.m) == 2"},
         {
           "window": [{"op": "sum", "field": "events", "as": "below"}],
           "sort": [{"field": "position", "order": "ascending"}],
           "frame": [null, 0]
         },
-        {"calculate": "(datum.busiest - datum.total) / 2 + datum.below - datum.events / 2", "as": "mid"}
+        {"calculate": "datum.below - datum.events / 2", "as": "mid"}
       ],
       "mark": {"type": "text", "fontWeight": 600, "fontSize": 12},
       "encoding": {
@@ -98,7 +103,7 @@
         "y": {"field": "mid", "type": "quantitative", "aggregate": "min", "stack": null},
         "text": {"field": "kind"},
         "color": {
-          "condition": {"test": "datum.kind == 'All other kinds'", "value": "#10292e"},
+          "condition": {"test": "datum.kind == 'Others'", "value": "#10292e"},
           "value": "#ffffff"
         }
       }

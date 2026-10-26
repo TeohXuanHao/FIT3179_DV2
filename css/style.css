@@ -123,6 +123,12 @@ select:focus-visible {
   font-size: 1.12rem;
 }
 
+/* Even out line lengths so no paragraph ends on a single stranded word */
+.hero-intro p,
+.part-lead p {
+  text-wrap: pretty;
+}
+
 /* Figures */
 
 .row {
@@ -479,7 +485,6 @@ select:focus-visible {
     row-gap: 12px;
     max-width: 36ch;
   }
-
   .fig .fig-sub {
     column-count: 1;
     max-width: 36ch;

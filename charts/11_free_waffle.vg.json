@@ -49,13 +49,19 @@
     "field": "heading",
     "type": "nominal",
     "sort": {"field": "position"},
-    "header": {"title": null, "labelPadding": 10, "labelAnchor": "start"}
+    "header": {
+      "title": null,
+      "labelPadding": 10,
+      "labelAnchor": "start",
+      "labelLineHeight": 17,
+      "labelExpr": "[slice(datum.value, 0, indexof(datum.value, ' in 100') + 7), slice(datum.value, indexof(datum.value, ' in 100') + 8)]"
+    }
   },
   "columns": 2,
-  "spacing": {"row": 34, "column": 56},
+  "spacing": {"row": 34, "column": 40},
   "spec": {
-    "width": 225,
-    "height": 225,
+    "width": 200,
+    "height": 200,
     "mark": {"type": "rect", "cornerRadius": 3},
     "encoding": {
       "x": {
