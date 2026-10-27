@@ -56,22 +56,12 @@
         "url": "data/lga_2025.topojson",
         "format": {"type": "topojson", "feature": "lga"}
       },
-      "transform": [
-        {"calculate": "'Not published council by council'", "as": "note"}
-      ],
       "mark": {
         "type": "geoshape",
         "clip": true,
         "fill": "#e7ecea",
         "stroke": "#f4f7f5",
         "strokeWidth": 0.4
-      },
-      "encoding": {
-        "tooltip": [
-          {"field": "properties.lga_name", "title": "Council area"},
-          {"field": "properties.state_name", "title": "State"},
-          {"field": "note", "title": "Attendances"}
-        ]
       }
     },
     {
@@ -138,18 +128,7 @@
         "strokeWidth": {
           "condition": {"test": "show_band != 'All councils' && datum.rate_band == show_band", "value": 0.8},
           "value": 0.4
-        },
-        "tooltip": [
-          {"field": "properties.lga_name", "title": "Council area"},
-          {"field": "properties.state_name", "title": "State"},
-          {
-            "field": "attendance_per_1000",
-            "title": "Attendances per 1,000 residents",
-            "format": ",.0f"
-          },
-          {"field": "attendance", "title": "Attendances", "format": ","},
-          {"field": "population", "title": "Residents", "format": ","}
-        ]
+        }
       }
     },
     {
@@ -226,7 +205,7 @@
             "latitude": -27,
             "note": [
               "States in grey do not publish",
-              "attendance council by council"
+              "attendance data by each council"
             ]
           }
         ]
